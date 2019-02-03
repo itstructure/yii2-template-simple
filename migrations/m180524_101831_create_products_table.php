@@ -1,29 +1,30 @@
 <?php
 
-use Itstructure\AdminModule\components\MultilanguageMigration;
+use yii\db\Migration;
 
 /**
  * Handles the creation of table `products`.
  */
-class m180524_101831_create_products_table extends MultilanguageMigration
+class m180524_101831_create_products_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createMultiLanguageTable('products',
+        $this->createTable('products',
             [
+                'id' => $this->primaryKey(),
                 'title' => $this->string(),
                 'description' => $this->text(),
                 'content' => $this->text(),
                 'metaKeys' => $this->string(),
                 'metaDescription' => $this->string(),
-            ],
-            [
                 'pageId' => $this->integer(),
                 'active' => $this->tinyInteger(1)->notNull()->defaultValue(0),
                 'icon' => $this->string(64),
+                'created_at' => $this->dateTime(),
+                'updated_at' => $this->dateTime(),
             ]
         );
 
@@ -69,6 +70,6 @@ class m180524_101831_create_products_table extends MultilanguageMigration
             'products'
         );
 
-        $this->dropMultiLanguageTable('products');
+        $this->dropTable('products');
     }
 }

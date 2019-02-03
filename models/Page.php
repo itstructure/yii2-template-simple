@@ -2,13 +2,25 @@
 
 namespace app\models;
 
-use Itstructure\AdminModule\models\{MultilanguageTrait, Language};
+use yii\helpers\ArrayHelper;
 use Itstructure\MultiLevelMenu\MenuWidget;
+use Itstructure\MFUploader\behaviors\{BehaviorMediafile, BehaviorAlbum};
+use Itstructure\MFUploader\models\OwnerAlbum;
+use Itstructure\MFUploader\models\album\Album;
+use Itstructure\MFUploader\interfaces\UploadModelInterface;
+use app\traits\ThumbnailTrait;
 
 /**
  * This is the model class for table "pages".
  *
+ * @property int|string $thumbnail thumbnail(mediafile id or url).
+ * @property array $albums Existing album ids.
  * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property string $content
+ * @property string $metaKeys
+ * @property string $metaDescription
  * @property string $created_at
  * @property string $updated_at
  * @property int $parentId
@@ -16,19 +28,37 @@ use Itstructure\MultiLevelMenu\MenuWidget;
  * @property string $icon
  * @property int $active
  *
- * @property PageLanguage[] $pagesLanguages
- * @property Language[] $languages
- *
  * @package app\models
  */
 class Page extends ActiveRecord
 {
-    use MultilanguageTrait;
+    use ThumbnailTrait;
+
+    /**
+     * @var int|string thumbnail(mediafile id or url).
+     */
+    public $thumbnail;
+
+    /**
+     * @var array
+     */
+    public $albums = [];
 
     /**
      * @var int
      */
     public $newParentId;
+
+    /**
+     * Initialize.
+     * Set albums, that page has.
+     */
+    public function init()
+    {
+        $this->albums = $this->getAlbums();
+
+        parent::init();
+    }
 
     /**
      * @inheritdoc
@@ -46,16 +76,27 @@ class Page extends ActiveRecord
         return [
             [
                 [
-                    'created_at',
-                    'updated_at',
-                ],
-                'safe',
-            ],
-            [
-                [
+                    'title',
+                    'content',
                     'active'
                 ],
                 'required',
+            ],
+            [
+                [
+                    'description',
+                    'content',
+                ],
+                'string',
+            ],
+            [
+                [
+                    'title',
+                    'metaKeys',
+                    'metaDescription',
+                ],
+                'string',
+                'max' => 255,
             ],
             [
                 [
@@ -70,7 +111,57 @@ class Page extends ActiveRecord
                 'string',
                 'max' => 64,
             ],
+            [
+                UploadModelInterface::FILE_TYPE_THUMB,
+                function($attribute){
+                    if (!is_numeric($this->{$attribute}) && !is_string($this->{$attribute})){
+                        $this->addError($attribute, 'Tumbnail content must be a numeric or string.');
+                    }
+                },
+                'skipOnError' => false,
+            ],
+            [
+                'albums',
+                'each',
+                'rule' => ['integer'],
+            ],
+            [
+                'title',
+                'unique',
+                'skipOnError'     => true,
+                'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
+            ],
+            [
+                [
+                    'created_at',
+                    'updated_at',
+                ],
+                'safe',
+            ],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'mediafile' => [
+                'class' => BehaviorMediafile::class,
+                'name' => static::tableName(),
+                'attributes' => [
+                    UploadModelInterface::FILE_TYPE_THUMB,
+                ],
+            ],
+            'albums' => [
+                'class' => BehaviorAlbum::class,
+                'name' => static::tableName(),
+                'attributes' => [
+                    'albums',
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -79,13 +170,20 @@ class Page extends ActiveRecord
     public function attributes(): array
     {
         return [
+            UploadModelInterface::FILE_TYPE_THUMB,
+            'albums',
             'id',
             'parentId',
             'icon',
             'active',
             'newParentId',
+            'title',
+            'description',
+            'content',
+            'metaKeys',
+            'metaDescription',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
     }
 
@@ -99,6 +197,11 @@ class Page extends ActiveRecord
             'parentId' => 'Parent Id',
             'icon' => 'Icon',
             'active' => 'Active',
+            'title' => 'Title',
+            'description' => 'Description',
+            'content' => 'Content',
+            'metaKeys' => 'Meta keys',
+            'metaDescription' => 'Meta description',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -156,24 +259,16 @@ class Page extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * Get albums, that catalog has.
+     *
+     * @return Album[]
      */
-    public function getPagesLanguages()
+    public function getAlbums()
     {
-        return $this->hasMany(PageLanguage::class, [
-            'pages_id' => 'id'
-        ]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLanguages()
-    {
-        return $this->hasMany(Language::class, [
-            'id' => 'language_id'
-        ])->viaTable('pages_language', [
-            'pages_id' => 'id'
-        ]);
+        return OwnerAlbum::getAlbumsQuery([
+            'owner' => $this->tableName(),
+            'ownerId' => $this->id,
+            'ownerAttribute' => 'albums',
+        ])->all();
     }
 }

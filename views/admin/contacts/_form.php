@@ -3,10 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use Itstructure\FieldWidgets\{Fields, FieldType};
-use Itstructure\AdminModule\models\Language;
 
 /* @var $this Itstructure\AdminModule\components\AdminView */
-/* @var $model app\models\Contact|Itstructure\AdminModule\models\MultilanguageValidateModel */
+/* @var $model app\models\Contact */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -52,7 +51,6 @@ use Itstructure\AdminModule\models\Language;
                 ],
                 'model'         => $model,
                 'form'          => $form,
-                'languageModel' => new Language()
             ]) ?>
 
             <?php echo $form->field($model, 'mapQ')->textInput([
@@ -69,9 +67,9 @@ use Itstructure\AdminModule\models\Language;
     </div>
 
     <div class="form-group">
-        <?php echo Html::submitButton($model->mainModel->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
             [
-                'class' => $model->mainModel->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
+                'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
             ]
         ) ?>
     </div>

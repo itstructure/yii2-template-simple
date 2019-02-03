@@ -5,7 +5,7 @@ namespace app\controllers\admin;
 use Yii;
 use dreamjobs\sitemap\SitemapDataHandler;
 use Itstructure\AdminModule\controllers\AdminController;
-use app\traits\{LanguageTrait, AdminBeforeActionTrait};
+use app\traits\AdminBeforeActionTrait;
 
 /**
  * Class SitemapController
@@ -14,7 +14,7 @@ use app\traits\{LanguageTrait, AdminBeforeActionTrait};
  */
 class SitemapController extends AdminController
 {
-    use LanguageTrait, AdminBeforeActionTrait;
+    use AdminBeforeActionTrait;
 
     /** @var string Alias to directory contains sitemap-models */
     public $modelsPath = '@app/models/sitemap';
@@ -48,7 +48,7 @@ class SitemapController extends AdminController
             $this->export();
 
             return $this->redirect([
-                '/'.$this->shortLanguage.'/admin/sitemap'
+                '/admin/sitemap'
             ]);
         }
 

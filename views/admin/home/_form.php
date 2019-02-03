@@ -3,10 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use Itstructure\FieldWidgets\{Fields, FieldType};
-use Itstructure\AdminModule\models\Language;
 
 /* @var $this Itstructure\AdminModule\components\AdminView */
-/* @var $model app\models\Home|Itstructure\AdminModule\models\MultilanguageValidateModel */
+/* @var $model app\models\Home */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -48,7 +47,7 @@ use Itstructure\AdminModule\models\Language;
                                 ['name' => 'pbckcode']
                             ],
                             'allowedContent' => true,
-                            'language' => $this->params['shortLanguage'],
+                            'language' => Yii::$app->language,
                         ]
                     ],
                     [
@@ -64,7 +63,6 @@ use Itstructure\AdminModule\models\Language;
                 ],
                 'model'         => $model,
                 'form'          => $form,
-                'languageModel' => new Language()
             ]) ?>
 
             <?php echo $form->field($model, 'default')->checkbox(['value' => 1, 'label' => Yii::t('app', 'Set as default')]) ?>
@@ -73,9 +71,9 @@ use Itstructure\AdminModule\models\Language;
     </div>
 
     <div class="form-group">
-        <?php echo Html::submitButton($model->mainModel->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
             [
-                'class' => $model->mainModel->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
+                'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
             ]
         ) ?>
     </div>

@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Itstructure\AdminModule\interfaces\ModelInterface;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "technologies".
@@ -10,15 +10,16 @@ use Itstructure\AdminModule\interfaces\ModelInterface;
  * @property int $id
  * @property string $name
  * @property int $share
+ * @property string $icon
  * @property string $created_at
  * @property string $updated_at
  *
- * @property About[] $about
  * @property AboutTechnology[] $aboutTechnologies
+ * @property About[] $about
  *
  * @package app\models
  */
-class Technology extends ActiveRecord implements ModelInterface
+class Technology extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -50,17 +51,24 @@ class Technology extends ActiveRecord implements ModelInterface
             ],
             [
                 [
+                    'name',
+                    'icon'
+                ],
+                'string',
+                'max' => 64
+            ],
+            [
+                'name',
+                'unique',
+                'skipOnError'     => true,
+                'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
+            ],
+            [
+                [
                     'created_at',
                     'updated_at'
                 ],
                 'safe'
-            ],
-            [
-                [
-                    'name'
-                ],
-                'string',
-                'max' => 64
             ],
         ];
     }
@@ -76,9 +84,23 @@ class Technology extends ActiveRecord implements ModelInterface
             'id',
             'name',
             'share',
+            'icon',
             'created_at',
             'updated_at',
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        $scenarios[self::SCENARIO_CREATE][] = 'about';
+        $scenarios[self::SCENARIO_UPDATE][] = 'about';
+
+        return $scenarios;
     }
 
     /**
@@ -90,6 +112,7 @@ class Technology extends ActiveRecord implements ModelInterface
             'id' => 'ID',
             'name' => 'Name',
             'share' => 'Share, %',
+            'icon' => 'Icon',
             'about' => 'About',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -97,7 +120,7 @@ class Technology extends ActiveRecord implements ModelInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAboutTechnologies()
     {
@@ -107,7 +130,7 @@ class Technology extends ActiveRecord implements ModelInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAbout()
     {
@@ -139,16 +162,6 @@ class Technology extends ActiveRecord implements ModelInterface
         $this->linkWithAbout(empty($this->about) ? [] : $this->about);
 
         parent::afterSave($insert, $changedAttributes);
-    }
-
-    /**
-     * Returns id of the model.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

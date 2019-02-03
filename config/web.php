@@ -2,12 +2,13 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$translations = require __DIR__ . '/translations.php';
 
 $config = [
-    'id' => 'biznessdevelop',
-    'version' => '',
+    'id' => 'yii2_template_simple',
+    'version' => '1.0.0',
     'basePath' => dirname(__DIR__),
-    'homeUrl' => YII_DEBUG ? 'http://bizness-develop' : 'http://bizness-develop.org',
+    'homeUrl' => YII_DEBUG ? 'http://yii2-template-simple' : 'http://yii2-template-simple',
     'bootstrap' => ['log'],
     'language' => 'en-US',
     'aliases' => [
@@ -17,7 +18,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'KD4pOn7VbD8eXpPzFA7bdOJmJQDp94hw',
+            'cookieValidationKey' => md5('ardGWC2D'),
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -25,7 +26,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            //'loginUrl' => 'en/login'
+            'loginUrl' => '/login'
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
@@ -66,113 +67,31 @@ $config = [
             'rules' => [
 
                 /* DASHBOARD */
-                '<shortLanguage:\w+>/admin' => 'admin/settings',
-                '<shortLanguage:\w+>/<module:(admin|rbac)>/<controller>' => '<module>/<controller>/index',
-                '<shortLanguage:\w+>/<module:(admin|rbac)>/<controller>/<action>' => '<module>/<controller>/<action>',
+                '/admin' => 'admin/settings',
+                '/<module:(admin|rbac)>/<controller>' => '<module>/<controller>/index',
+                '/<module:(admin|rbac)>/<controller>/<action>' => '<module>/<controller>/<action>',
 
                 /* OUTSIDE */
-                '' => 'redirect/home-page',
-                '<shortLanguage:\w+>' => '/home/index',
-                '<shortLanguage:\w+>/logout' => 'site/logout',
-                '<shortLanguage:\w+>/<action:(reg|login)>' => 'site/<action>',
-                '<shortLanguage:\w+>/<controller:(contact|site)>/captcha' => '<controller>/captcha',
-                '<shortLanguage:\w+>/<controller:(home|about|contact|site)>' => '<controller>/index',
-                '<shortLanguage:\w+>/<controller:(page|product)>/<id:\d+>' => '<controller>/view',
+                '' => '/home/index',
+                '/logout' => 'site/logout',
+                '/<action:(reg|login)>' => 'site/<action>',
+                '/<controller:(contact|site)>/captcha' => '<controller>/captcha',
+                '/<controller:(home|about|contact|site)>' => '<controller>/index',
+                '/<controller:(page|product)>/<id:\d+>' => '<controller>/view',
+                '<controller:(ajax/feedback-ajax)>/<action:(send)>' => '<controller>/<action>',
+                '<controller:(ajax/recaptcha-ajax)>/<action:(validate)>' => '<controller>/<action>',
 
                 /* MFU Module */
                 '<module:(mfuploader)>/<controller:(managers)>/<action:(filemanager|uploadmanager)>' => '<module>/<controller>/<action>',
                 '<module:(mfuploader)>/<controller:(fileinfo)>' => '<module>/<controller>/index',
                 '<module:(mfuploader)>/<controller:(fileinfo)>/<action:(index)>' => '<module>/<controller>/<action>',
                 '<module:(mfuploader)>/<controller:(upload/local-upload|upload/s3-upload)>/<action:(send|update|delete)>' => '<module>/<controller>/<action>',
+                '/<module:(mfuploader)>/<controller:(image-album|audio-album|video-album|application-album|text-album|other-album)>' => '<module>/<controller>/index',
+                '/<module:(mfuploader)>/<controller:(image-album|audio-album|video-album|application-album|text-album|other-album)>/<action:(index|view|create|update|delete)>' => '<module>/<controller>/<action>',
             ],
         ],
         'i18n' => [
-            'translations' => [
-                'app*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'app' => 'app.php',
-                    ],
-                ],
-                'settings*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'settings' => 'settings.php',
-                    ],
-                ],
-                'pages*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'pages' => 'pages.php',
-                    ],
-                ],
-                'products*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'products' => 'products.php',
-                    ],
-                ],
-                'feedback*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'feedback' => 'feedback.php',
-                    ],
-                ],
-                'about*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'about' => 'about.php',
-                    ],
-                ],
-                'technologies*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'technologies' => 'technologies.php',
-                    ],
-                ],
-                'contacts*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'contacts' => 'contacts.php',
-                    ],
-                ],
-                'social*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'social' => 'social.php',
-                    ],
-                ],
-                'home*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'home' => 'home.php',
-                    ],
-                ],
-                'slider*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'slider' => 'slider.php',
-                    ],
-                ],
-                'features*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'features' => 'features.php',
-                    ],
-                ],
-                'site*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'site' => 'site.php',
-                    ],
-                ],
-                'users*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'users' => 'users.php',
-                    ],
-                ],
-            ]
+            'translations' => $translations
         ],
     ],
     'defaultRoute' => '/en/home/index',

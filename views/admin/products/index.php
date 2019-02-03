@@ -3,6 +3,7 @@
 use yii\grid\GridView;
 use yii\widgets\LinkPager;
 use yii\helpers\{Url, Html};
+use Itstructure\MFUploader\Module as MFUModule;
 use app\models\ProductSearch;
 
 /* @var $searchModel ProductSearch */
@@ -43,12 +44,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
+            [
+                'label' => MFUModule::t('main', 'Thumbnail'),
+                'value' => function($data) {
+                    /* @var $data ProductSearch */
+                    $defaultThumbImage = $data->getDefaultThumbImage();
+                    return !empty($defaultThumbImage) ? Html::a($defaultThumbImage, Url::to([
+                        $this->params['urlPrefix'].'view',
+                        'id' => $data->id
+                    ])) : '';
+                },
+                'format' => 'raw',
+            ],
             'title' => [
                 'label' => Yii::t('app', 'Title'),
                 'value' => function($searchModel) {
                     /* @var $searchModel ProductSearch */
                     return Html::a(
-                        Html::encode($searchModel->getDefaultTranslate('title')),
+                        Html::encode($searchModel->title),
                         Url::to([$this->params['urlPrefix'].'view', 'id' => $searchModel->id])
                     );
                 },
@@ -58,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => Yii::t('app', 'Description'),
                 'value' => function($searchModel) {
                     /* @var $searchModel ProductSearch */
-                    return $searchModel->getDefaultTranslate('description');
+                    return $searchModel->description;
                 },
                 'format' => 'raw',
             ],
@@ -67,8 +80,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($searchModel) {
                     /* @var $searchModel app\models\ProductSearch */
                     return null === $searchModel->page ? '' : Html::a(
-                        $searchModel->page->getDefaultTranslate('title'),
-                        Url::to(['/'.$this->params['shortLanguage'].'/admin/pages/view', 'id' => $searchModel->page->id]),
+                        $searchModel->page->title,
+                        Url::to(['/admin/pages/view', 'id' => $searchModel->page->id]),
                         [
                             'target' => '_blank'
                         ]

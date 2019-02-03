@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this Itstructure\AdminModule\components\AdminView */
-/* @var $model Itstructure\AdminModule\models\MultilanguageValidateModel */
+/* @var $model app\models\Home */
 
 $this->title = Yii::t('home', 'Create home page');
 $this->params['breadcrumbs'][] = [

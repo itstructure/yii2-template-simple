@@ -56,7 +56,7 @@ class ProductSearch extends Product
      */
     public function search($params)
     {
-        $query = Product::find()->joinWith(['productsLanguages']);
+        $query = Product::find();
 
         // add conditions that should always apply here
 
@@ -78,7 +78,7 @@ class ProductSearch extends Product
             'active' => $this->active,
         ]);
 
-        $query->andFilterWhere(['like', 'products_language.title', $this->title]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
 
         $pagination = new Pagination([
             'defaultPageSize' => Yii::$app->params['defaultPageSize'],

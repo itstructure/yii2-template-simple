@@ -2,8 +2,12 @@
 
 namespace app\controllers\admin;
 
+use yii\data\Pagination;
 use app\models\{Page, Product, ProductSearch};
-use app\traits\{LanguageTrait, AdminBeforeActionTrait};
+use app\traits\{AdminBeforeActionTrait, AccessTrait};
+use Itstructure\MFUploader\models\OwnerMediafile;
+use Itstructure\MFUploader\models\album\Album;
+use Itstructure\MFUploader\interfaces\UploadModelInterface;
 use Itstructure\AdminModule\controllers\CommonAdminController;
 
 /**
@@ -14,12 +18,73 @@ use Itstructure\AdminModule\controllers\CommonAdminController;
  */
 class ProductController extends CommonAdminController
 {
-    use LanguageTrait, AdminBeforeActionTrait;
+    use AdminBeforeActionTrait, AccessTrait;
 
     /**
-     * @var bool
+     * @return mixed|string
      */
-    protected $isMultilanguage = true;
+    public function actionIndex()
+    {
+        if (!$this->checkAccessToIndex()) {
+            return $this->accessError();
+        }
+
+        return parent::actionIndex();
+    }
+
+    /**
+     * @param int|string $id
+     *
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        if (!$this->checkAccessToView()) {
+            return $this->accessError();
+        }
+
+        return parent::actionView($id);
+    }
+
+    /**
+     * @return mixed|string|\yii\web\Response
+     */
+    public function actionCreate()
+    {
+        if (!$this->checkAccessToCreate()) {
+            return $this->accessError();
+        }
+
+        return parent::actionCreate();
+    }
+
+    /**
+     * @param int|string $id
+     *
+     * @return string|\yii\web\Response
+     */
+    public function actionUpdate($id)
+    {
+        if (!$this->checkAccessToUpdate()) {
+            return $this->accessError();
+        }
+
+        return parent::actionUpdate($id);
+    }
+
+    /**
+     * @param int|string $id
+     *
+     * @return mixed|\yii\web\Response
+     */
+    public function actionDelete($id)
+    {
+        if (!$this->checkAccessToDelete()) {
+            return $this->accessError();
+        }
+
+        return parent::actionDelete($id);
+    }
 
     /**
      * Get addition fields for the view template.
@@ -29,9 +94,30 @@ class ProductController extends CommonAdminController
     protected function getAdditionFields(): array
     {
         if ($this->action->id == 'create' || $this->action->id == 'update') {
-            return [
-                'pages' => Page::getMenu()
-            ];
+            $fields = [];
+
+            $fields['pages'] = Page::getMenu();
+            $fields['albums'] = Album::find()->select([
+                'id', 'title'
+            ])->all();
+
+            if ($this->action->id == 'update') {
+                $mediafilesQuery = OwnerMediafile::getMediaFilesQuery([
+                    'owner' => Product::tableName(),
+                    'ownerId' => $this->model->getId(),
+                    'ownerAttribute' => UploadModelInterface::FILE_TYPE_IMAGE,
+                ]);
+                $media_pages = new Pagination([
+                    'defaultPageSize' => 6,
+                    'totalCount' => $mediafilesQuery->count()
+                ]);
+                $fields['images'] = $mediafilesQuery->offset($media_pages->offset)
+                    ->limit($media_pages->limit)
+                    ->all();
+                $fields['media_pages'] = $media_pages;
+            }
+
+            return $fields;
         }
 
         return $this->additionFields;

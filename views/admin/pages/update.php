@@ -1,10 +1,11 @@
 <?php
 
 /* @var $this Itstructure\AdminModule\components\AdminView */
-/* @var $model Itstructure\AdminModule\models\MultilanguageValidateModel */
+/* @var $model app\models\Page */
 /* @var $pages array|\yii\db\ActiveRecord[] */
+/* @var $albums Itstructure\MFUploader\models\album\Album[] */
 
-$this->title = Yii::t('pages', 'Update page').': ' . $model->mainModel->getDefaultTranslate('title');
+$this->title = Yii::t('pages', 'Update page').': ' . $model->title;
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('pages', 'Pages'),
     'url' => [
@@ -12,7 +13,7 @@ $this->params['breadcrumbs'][] = [
     ]
 ];
 $this->params['breadcrumbs'][] = [
-    'label' => $model->mainModel->getDefaultTranslate('title'),
+    'label' => $model->title,
     'url' => [
         $this->params['urlPrefix'].'view',
         'id' => $model->id
@@ -25,6 +26,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <?php echo $this->render('_form', [
         'model' => $model,
         'pages' => $pages,
+        'albums' => $albums,
+        'ownerParams' => [
+            'owner' => \app\models\Page::tableName(),
+            'ownerId' => $model->getId(),
+        ],
     ]) ?>
 
 </div>

@@ -1,27 +1,28 @@
 <?php
 
-use Itstructure\AdminModule\components\MultilanguageMigration;
+use yii\db\Migration;
 
 /**
  * Handles the creation of table `about`.
  */
-class m180531_134500_create_about_table extends MultilanguageMigration
+class m180531_134500_create_about_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createMultiLanguageTable('about',
+        $this->createTable('about',
             [
+                'id' => $this->primaryKey(),
                 'title' => $this->string(),
                 'description' => $this->text(),
                 'content' => $this->text(),
                 'metaKeys' => $this->string(),
                 'metaDescription' => $this->string(),
-            ],
-            [
                 'default' => $this->tinyInteger(1)->defaultValue(0),
+                'created_at' => $this->dateTime(),
+                'updated_at' => $this->dateTime(),
             ]
         );
     }
@@ -31,6 +32,6 @@ class m180531_134500_create_about_table extends MultilanguageMigration
      */
     public function safeDown()
     {
-        $this->dropMultiLanguageTable('about');
+        $this->dropTable('about');
     }
 }

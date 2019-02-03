@@ -50,6 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
+                'label' => Yii::t('app', 'Icon'),
+                'value' => function($model) {
+                    /* @var $model app\models\Technology */
+                    return Html::tag('i', '', ['class' => empty($model->icon) ? 'fa fa-file fa-2x' : $model->icon]);
+                },
+                'format' => 'raw',
+            ],
+            [
                 'attribute' => 'name',
                 'label' => Yii::t('technologies', 'Name'),
             ],
@@ -64,8 +72,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     $aboutRecords = '';
                     foreach ($model->about as $aboutRecord) {
                         $aboutRecords .= Html::tag('li',
-                            Html::a($aboutRecord->getDefaultTranslate('title'),
-                                Url::to(['/'.$this->params['shortLanguage'].'/admin/about/view', 'id' => $aboutRecord->id]),
+                            Html::a($aboutRecord->title,
+                                Url::to(['/admin/about/view', 'id' => $aboutRecord->id]),
                                 [
                                     'target' => '_blank'
                                 ]

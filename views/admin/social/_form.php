@@ -42,7 +42,7 @@ use yii\bootstrap\Modal;
             <?php echo $form->field($model, 'contacts')
                 ->checkboxList(ArrayHelper::map($contactList, 'id', function ($item) {
                     /* @var $item app\models\Contact */
-                    return $item->getDefaultTranslate('title');
+                    return $item->title;
                 }), [
                     'separator' => '<br />',
                 ])->label(Yii::t('social', 'Parent contact records')); ?>

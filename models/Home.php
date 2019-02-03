@@ -2,25 +2,23 @@
 
 namespace app\models;
 
-use Itstructure\AdminModule\models\{MultilanguageTrait, Language};
-
 /**
  * This is the model class for table "home".
  *
  * @property int $id
  * @property int $default
+ * @property string $title
+ * @property string $description
+ * @property string $content
+ * @property string $metaKeys
+ * @property string $metaDescription
  * @property string $created_at
  * @property string $updated_at
- *
- * @property HomeLanguage[] $homeLanguages
- * @property Language[] $languages
  *
  * @package app\models
  */
 class Home extends ActiveRecord
 {
-    use MultilanguageTrait;
-
     /**
      * {@inheritdoc}
      */
@@ -37,9 +35,37 @@ class Home extends ActiveRecord
         return [
             [
                 [
+                    'title',
+                ],
+                'required'
+            ],
+            [
+                [
+                    'description',
+                    'content'
+                ],
+                'string'
+            ],
+            [
+                [
+                    'title',
+                    'metaKeys',
+                    'metaDescription'
+                ],
+                'string',
+                'max' => 255
+            ],
+            [
+                [
                     'default'
                 ],
                 'integer'
+            ],
+            [
+                'title',
+                'unique',
+                'skipOnError'     => true,
+                'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
             ],
             [
                 [
@@ -59,6 +85,11 @@ class Home extends ActiveRecord
         return [
             'id' => 'ID',
             'default' => 'Default',
+            'title' => 'Title',
+            'description' => 'Description',
+            'content' => 'Content',
+            'metaKeys' => 'Meta Keys',
+            'metaDescription' => 'Meta Description',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -100,27 +131,5 @@ class Home extends ActiveRecord
                 'default' => 1
             ])
             ->one();
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHomeLanguages()
-    {
-        return $this->hasMany(HomeLanguage::class, [
-            'home_id' => 'id'
-        ]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLanguages()
-    {
-        return $this->hasMany(Language::class, [
-            'id' => 'language_id'
-        ])->viaTable('home_language', [
-            'home_id' => 'id'
-        ]);
     }
 }

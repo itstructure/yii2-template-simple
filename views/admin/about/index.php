@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($searchModel) {
                     /* @var $searchModel AboutSearch */
                     return Html::a(
-                        Html::encode($searchModel->getDefaultTranslate('title')),
+                        Html::encode($searchModel->title),
                         Url::to([$this->params['urlPrefix'].'view', 'id' => $searchModel->id])
                     );
                 },
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => Yii::t('app', 'Description'),
                 'value' => function($searchModel) {
                     /* @var $searchModel AboutSearch */
-                    return $searchModel->getDefaultTranslate('description');
+                    return $searchModel->description;
                 },
                 'format' => 'raw',
             ],
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
 
                     return Html::a(Yii::t('app', 'Set as default'), Url::to([
-                        'set-default',
+                        $this->params['urlPrefix'].'set-default',
                         'aboutId' => $searchModel->id,
                     ]), [
                         'title' => Yii::t('app', 'Set as default'),

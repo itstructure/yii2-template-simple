@@ -1,15 +1,18 @@
 <?php
 
-use yii\helpers\{Html, Url};
+use yii\helpers\{Html, Url, ArrayHelper};
 use yii\widgets\ActiveForm;
 use Itstructure\FieldWidgets\{Fields, FieldType};
-use Itstructure\AdminModule\models\Language;
 use Itstructure\MultiLevelMenu\MenuWidget;
+use Itstructure\MFUploader\Module as MFUModule;
+use Itstructure\MFUploader\models\album\Album;
 
 /* @var $this Itstructure\AdminModule\components\AdminView */
-/* @var $model app\models\Page|Itstructure\AdminModule\models\MultilanguageValidateModel */
+/* @var $model app\models\Page */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $pages array|\yii\db\ActiveRecord[] */
+/* @var $albums Album[] */
+/* @var $ownerParams array */
 ?>
 
 <div class="catalog-form">
@@ -50,7 +53,7 @@ use Itstructure\MultiLevelMenu\MenuWidget;
                                 ['name' => 'pbckcode']
                             ],
                             'allowedContent' => true,
-                            'language' => $this->params['shortLanguage'],
+                            'language' => Yii::$app->language,
                         ]
                     ],
                     [
@@ -66,7 +69,6 @@ use Itstructure\MultiLevelMenu\MenuWidget;
                 ],
                 'model'         => $model,
                 'form'          => $form,
-                'languageModel' => new Language()
             ]) ?>
 
             <?php echo $form->field($model, 'icon')->textInput([
@@ -75,14 +77,25 @@ use Itstructure\MultiLevelMenu\MenuWidget;
             ])->label(Yii::t('app', 'Icon html class')); ?>
             <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-4">
-                    <?php if(!$model->mainModel->isNewRecord): ?>
-                        <?php echo Html::tag('i', '', ['class' => empty($model->mainModel->icon) ? 'fa fa-file fa-2x' : $model->mainModel->icon]) ?>
+                    <?php if(!$model->isNewRecord): ?>
+                        <?php echo Html::tag('i', '', ['class' => empty($model->icon) ? 'fa fa-file fa-2x' : $model->icon]) ?>
                     <?php endif; ?>
                     <?php echo Html::a('Fontawesome icons', Url::to('https://fontawesome.ru/all-icons/'), [
                         'target' => '_blank'
                     ]); ?>
                 </div>
             </div>
+
+            <!-- Thumbnail begin -->
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-md-6">
+                    <?php echo $this->render('../mediafiles/_thumbnail', [
+                        'model' => $model,
+                        'ownerParams' => isset($ownerParams) && is_array($ownerParams) ? $ownerParams : null,
+                    ]) ?>
+                </div>
+            </div>
+            <!-- Thumbnail end -->
 
             <?php echo $form->field($model, 'active')
                 ->radioList([1 => Yii::t('app', 'Active'), 0 => Yii::t('app', 'Inactive')])
@@ -109,13 +122,25 @@ use Itstructure\MultiLevelMenu\MenuWidget;
                 ],
             ]) ?>
 
+            <!-- Albums begin -->
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-md-6">
+                    <?php echo $form->field($model, 'albums')->checkboxList(
+                        ArrayHelper::map($albums, 'id', 'title'),
+                        [
+                            'separator' => '<br />',
+                        ]
+                    )->label(MFUModule::t('album', 'Albums')); ?>
+                </div>
+            </div>
+            <!-- Albums end -->
         </div>
     </div>
 
     <div class="form-group">
-        <?php echo Html::submitButton($model->mainModel->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
             [
-                'class' => $model->mainModel->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
+                'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'
             ]
         ) ?>
     </div>

@@ -2,13 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use Itstructure\FieldWidgets\TableMultilanguage;
-use Itstructure\AdminModule\models\Language;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Contact */
 
-$this->title = $model->getDefaultTranslate('title');
+$this->title = $model->title;
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('contacts', 'Contacts'),
     'url' => [
@@ -47,42 +45,34 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <h3><?php echo Yii::t('app', 'Translate'); ?></h3>
-    <?php echo TableMultilanguage::widget([
-        'fields' => [
-            [
-                'name' => 'title',
-                'label' => Yii::t('contacts', 'Title'),
-            ],
-            [
-                'name' => 'address',
-                'label' => Yii::t('contacts', 'Address'),
-            ],
-            [
-                'name' => 'email',
-                'label' => Yii::t('contacts', 'Email'),
-            ],
-            [
-                'name' => 'phone',
-                'label' => Yii::t('contacts', 'Phone'),
-            ],
-            [
-                'name' => 'metaKeys',
-                'label' => Yii::t('app', 'Meta keys'),
-            ],
-            [
-                'name' => 'metaDescription',
-                'label' => Yii::t('app', 'Meta description'),
-            ],
-        ],
-        'model'         => $model,
-        'languageModel' => new Language(),
-    ]) ?>
-
     <?php echo DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'attribute' => 'title',
+                'label' => Yii::t('contacts', 'Title'),
+            ],
+            [
+                'attribute' => 'address',
+                'label' => Yii::t('contacts', 'Address'),
+            ],
+            [
+                'attribute' => 'email',
+                'label' => Yii::t('contacts', 'Email'),
+            ],
+            [
+                'attribute' => 'phone',
+                'label' => Yii::t('contacts', 'Phone'),
+            ],
+            [
+                'attribute' => 'metaKeys',
+                'label' => Yii::t('app', 'Meta keys'),
+            ],
+            [
+                'attribute' => 'metaDescription',
+                'label' => Yii::t('app', 'Meta description'),
+            ],
             [
                 'label' => Yii::t('app', 'Default status'),
                 'value' => function($model) {

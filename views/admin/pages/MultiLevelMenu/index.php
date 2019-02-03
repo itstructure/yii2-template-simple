@@ -1,8 +1,9 @@
 <?php
 use yii\helpers\{Url, Html};
 use app\helpers\BaseHelper;
+use app\models\Page;
 
-/* @var app\models\Page $data */
+/* @var Page $data */
 /* @var string $urlPrefix */
 ?>
 <div class="row">
@@ -14,7 +15,7 @@ use app\helpers\BaseHelper;
     </div>
     <div class="col-md-4">
         <?php echo Html::a(
-            Html::encode($data->getDefaultTranslate('title')),
+            Html::encode($data->title),
             Url::to([$urlPrefix.'view', 'id' => $data->id])
         ) ?>
     </div>

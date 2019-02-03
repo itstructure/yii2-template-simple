@@ -1,14 +1,17 @@
 <?php
 
 use yii\helpers\{Html, Url};
+use yii\grid\GridView;
 use yii\widgets\DetailView;
-use Itstructure\FieldWidgets\TableMultilanguage;
-use Itstructure\AdminModule\models\Language;
+use yii\data\ArrayDataProvider;
+use Itstructure\MFUploader\Module as MFUModule;
+use Itstructure\MFUploader\models\album\Album;
+use app\models\Product;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Product */
+/* @var $model Product */
 
-$this->title = $model->getDefaultTranslate('title');
+$this->title = $model->title;
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('products', 'Products'),
     'url' => [
@@ -47,50 +50,53 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <h3><?php echo Yii::t('app', 'Translate'); ?></h3>
-    <?php echo TableMultilanguage::widget([
-        'fields' => [
-            [
-                'name' => 'title',
-                'label' => Yii::t('app', 'Title'),
-            ],
-            [
-                'name' => 'description',
-                'label' => Yii::t('app', 'Description'),
-            ],
-            [
-                'name' => 'content',
-                'label' => Yii::t('app', 'Content'),
-            ],
-            [
-                'name' => 'metaKeys',
-                'label' => Yii::t('app', 'Meta keys'),
-            ],
-            [
-                'name' => 'metaDescription',
-                'label' => Yii::t('app', 'Meta description'),
-            ],
-        ],
-        'model'         => $model,
-        'languageModel' => new Language(),
-    ]) ?>
-
     <?php echo DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             [
+                'attribute' => 'title',
+                'label' => Yii::t('app', 'Title'),
+            ],
+            [
+                'attribute' => 'description',
+                'label' => Yii::t('app', 'Description'),
+            ],
+            [
+                'attribute' => 'content',
+                'label' => Yii::t('app', 'Content'),
+            ],
+            [
+                'attribute' => 'metaKeys',
+                'label' => Yii::t('app', 'Meta keys'),
+            ],
+            [
+                'attribute' => 'metaDescription',
+                'label' => Yii::t('app', 'Meta description'),
+            ],
+            [
                 'label' => Yii::t('app', 'Icon'),
                 'value' => function($model) {
-                    /* @var $model app\models\Product */
+                    /* @var $model Product */
                     return Html::tag('i', '', ['class' => empty($model->icon) ? 'fa fa-file fa-2x' : $model->icon]);
+                },
+                'format' => 'raw',
+            ],
+            'thumbnail' => [
+                'label' => MFUModule::t('main', 'Thumbnail'),
+                'value' => function ($model) {
+                    /* @var $model Product */
+                    $thumbnailModel = $model->getThumbnailModel();
+                    return $thumbnailModel == null ? '' : Html::a($model->getDefaultThumbImage(), Url::to($thumbnailModel->getThumbUrl(MFUModule::THUMB_ALIAS_LARGE)), [
+                        'target' => '_blank'
+                    ]);
                 },
                 'format' => 'raw',
             ],
             [
                 'label' => Yii::t('app', 'Active status'),
                 'value' => function($model) {
-                    /* @var $model app\models\Product */
+                    /* @var $model Product */
                     if ($model->active == 1){
                         return '<i class="fa fa-check-circle text-success"> ' . Yii::t('app', 'Active') . '</i>';
                     } else {
@@ -102,10 +108,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => Yii::t('products', 'Parent page'),
                 'value' => function ($model) {
-                    /* @var $model app\models\Product */
+                    /* @var $model Product */
                     return null === $model->page ? '' : Html::a(
-                        $model->page->getDefaultTranslate('title'),
-                        Url::to(['/'.$this->params['shortLanguage'].'/admin/pages/view', 'id' => $model->page->id]),
+                        $model->page->title,
+                        Url::to(['/admin/pages/view', 'id' => $model->page->id]),
                         [
                             'target' => '_blank'
                         ]
@@ -125,5 +131,40 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
+
+    <h3><?php echo MFUModule::t('album', 'Albums') ?></h3>
+    <?php echo GridView::widget([
+        'dataProvider' => new ArrayDataProvider([
+            'allModels' => $model->getAlbums()
+        ]),
+        'columns' => [
+            'thumbnail' => [
+                'label' => MFUModule::t('main', 'Thumbnail'),
+                'value' => function($item) {
+                    /** @var Album $item */
+                    return Html::a(
+                        $item->getDefaultThumbImage(),
+                        Url::to([
+                            '/mfuploader/'.$item->getFileType($item->type).'-album/view', 'id' => $item->id
+                        ])
+                    );
+                },
+                'format' => 'raw',
+            ],
+            'name' => [
+                'label' => MFUModule::t('album', 'Title'),
+                'value' => function($item) {
+                    /** @var Album $item */
+                    return Html::a(
+                        Html::encode($item->title),
+                        Url::to([
+                            '/mfuploader/'.$item->getFileType($item->type).'-album/view', 'id' => $item->id
+                        ])
+                    );
+                },
+                'format' => 'raw',
+            ],
+        ],
+    ]); ?>
 
 </div>

@@ -2,20 +2,22 @@
 
 namespace app\models;
 
-use Itstructure\AdminModule\models\{MultilanguageTrait, Language};
-
 /**
  * This is the model class for table "contacts".
  *
  * @property int $id
  * @property int $default
+ * @property string $title
+ * @property string $address
+ * @property string $email
+ * @property string $phone
+ * @property string $metaKeys
+ * @property string $metaDescription
  * @property string $created_at
  * @property string $updated_at
  * @property string $mapQ
  * @property int $mapZoom
  *
- * @property ContactLanguage[] $contactsLanguages
- * @property Language[] $languages
  * @property ContactSocial[] $contactSocial
  * @property Social[] $social
  *
@@ -23,8 +25,6 @@ use Itstructure\AdminModule\models\{MultilanguageTrait, Language};
  */
 class Contact extends ActiveRecord
 {
-    use MultilanguageTrait;
-
     /**
      * {@inheritdoc}
      */
@@ -41,6 +41,42 @@ class Contact extends ActiveRecord
         return [
             [
                 [
+                    'title',
+                ],
+                'required'
+            ],
+            [
+                [
+                    'title',
+                    'metaKeys',
+                    'metaDescription'
+                ],
+                'string',
+                'max' => 255
+            ],
+            [
+                [
+                    'address'
+                ],
+                'string',
+                'max' => 128
+            ],
+            [
+                [
+                    'email'
+                ],
+                'string',
+                'max' => 64
+            ],
+            [
+                [
+                    'phone'
+                ],
+                'string',
+                'max' => 32
+            ],
+            [
+                [
                     'default',
                     'mapZoom'
                 ],
@@ -50,6 +86,12 @@ class Contact extends ActiveRecord
                 'mapQ',
                 'string',
                 'max' => 255
+            ],
+            [
+                'title',
+                'unique',
+                'skipOnError'     => true,
+                'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
             ],
             [
                 [
@@ -69,6 +111,12 @@ class Contact extends ActiveRecord
         return [
             'id' => 'ID',
             'default' => 'Default',
+            'title' => 'Title',
+            'address' => 'Address',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'metaKeys' => 'Meta Keys',
+            'metaDescription' => 'Meta Description',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'mapQ' => 'Map place',
@@ -112,28 +160,6 @@ class Contact extends ActiveRecord
         }
 
         return parent::beforeSave($insert);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getContactsLanguages()
-    {
-        return $this->hasMany(ContactLanguage::class, [
-            'contacts_id' => 'id'
-        ]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLanguages()
-    {
-        return $this->hasMany(Language::class, [
-            'id' => 'language_id'
-        ])->viaTable('contacts_language', [
-            'contacts_id' => 'id'
-        ]);
     }
 
     /**

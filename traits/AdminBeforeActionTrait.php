@@ -3,17 +3,12 @@
 namespace app\traits;
 
 use Yii;
-use yii\helpers\ArrayHelper;
-use app\helpers\BaseHelper;
-use Itstructure\AdminModule\models\Language;
 use Itstructure\AdminModule\components\AdminView;
 
 /**
  * Class AdminBeforeActionTrait
  *
  * @property AdminView $view
- * @property string $shortLanguage
- * @property Language[] $languages
  *
  * @package app\traits
  */
@@ -36,23 +31,13 @@ trait AdminBeforeActionTrait
     {
         $this->view->mainMenuConfig = require __DIR__ . '/../config/admin/main-menu.php';
 
-        $this->view->homeUrl = '/' . $this->shortLanguage . '/admin';
+        $this->view->profileLink = '/admin/users/view?id='.Yii::$app->getUser()->id;
 
-        $this->view->signOutLink = '/' . $this->shortLanguage . '/logout';
-
-        Yii::$app->getUser()->loginUrl = '/' . $this->shortLanguage . '/login';
-
-        $this->urlPrefix = '/' . $this->shortLanguage . '/' . $this->module->id . '/' . $action->controller->id . '/';
+        $this->urlPrefix = '/' . $this->module->id . '/' . $action->controller->id . '/';
 
         if (array_key_exists($action->controller->id, $this->neighborControllers)) {
-            $this->urlPrefixNeighbor = '/' . $this->shortLanguage . '/' . $this->module->id . '/' .
-                $this->neighborControllers[$action->controller->id] . '/';
+            $this->urlPrefixNeighbor = '/' . $this->module->id . '/' . $this->neighborControllers[$action->controller->id] . '/';
         }
-
-        $this->view->userBody = ArrayHelper::map($this->languages, 'name', function ($item) {
-            /* @var Language $item */
-            return BaseHelper::getSwitchLanguageLink($item->getShortName(), Yii::$app->request);
-        });
 
         return parent::beforeAction($action);
     }

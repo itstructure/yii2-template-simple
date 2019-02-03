@@ -2,13 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use Itstructure\FieldWidgets\TableMultilanguage;
-use Itstructure\AdminModule\models\Language;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Home */
 
-$this->title = $model->getDefaultTranslate('title');
+$this->title = $model->title;
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('home', 'Home page'),
     'url' => [
@@ -47,38 +45,30 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <h3><?php echo Yii::t('app', 'Translate'); ?></h3>
-    <?php echo TableMultilanguage::widget([
-        'fields' => [
-            [
-                'name' => 'title',
-                'label' => Yii::t('app', 'Title'),
-            ],
-            [
-                'name' => 'description',
-                'label' => Yii::t('app', 'Description'),
-            ],
-            [
-                'name' => 'content',
-                'label' => Yii::t('app', 'Content'),
-            ],
-            [
-                'name' => 'metaKeys',
-                'label' => Yii::t('app', 'Meta keys'),
-            ],
-            [
-                'name' => 'metaDescription',
-                'label' => Yii::t('app', 'Meta description'),
-            ],
-        ],
-        'model'         => $model,
-        'languageModel' => new Language(),
-    ]) ?>
-
     <?php echo DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'attribute' => 'title',
+                'label' => Yii::t('app', 'Title'),
+            ],
+            [
+                'attribute' => 'description',
+                'label' => Yii::t('app', 'Description'),
+            ],
+            [
+                'attribute' => 'content',
+                'label' => Yii::t('app', 'Content'),
+            ],
+            [
+                'attribute' => 'metaKeys',
+                'label' => Yii::t('app', 'Meta keys'),
+            ],
+            [
+                'attribute' => 'metaDescription',
+                'label' => Yii::t('app', 'Meta description'),
+            ],
             [
                 'label' => Yii::t('app', 'Default status'),
                 'value' => function($model) {

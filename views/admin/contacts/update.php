@@ -1,9 +1,9 @@
 <?php
 
 /* @var $this Itstructure\AdminModule\components\AdminView */
-/* @var $model Itstructure\AdminModule\models\MultilanguageValidateModel */
+/* @var $model app\models\Contact */
 
-$this->title = Yii::t('contacts', 'Update contact').': ' . $model->mainModel->getDefaultTranslate('title');
+$this->title = Yii::t('contacts', 'Update contact').': ' . $model->title;
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('contacts', 'Contacts'),
     'url' => [
@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = [
     ]
 ];
 $this->params['breadcrumbs'][] = [
-    'label' => $model->mainModel->getDefaultTranslate('title'),
+    'label' => $model->title,
     'url' => [
         $this->params['urlPrefix'].'view',
         'id' => $model->id

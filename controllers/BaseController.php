@@ -5,10 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\Controller;
-use app\helpers\BaseHelper;
 use app\models\{Page, Contact};
-use app\traits\LanguageTrait;
-use Itstructure\AdminModule\models\Language;
 
 /**
  * Class BaseController
@@ -17,8 +14,6 @@ use Itstructure\AdminModule\models\Language;
  */
 class BaseController extends Controller
 {
-    use LanguageTrait;
-
     /**
      * @var string
      */
@@ -33,6 +28,7 @@ class BaseController extends Controller
     {
         $this->view->params['pages'] = Page::getActiveMenu();
         $this->view->params['contacts'] = Contact::getDefaultContacts();
+        $this->view->params['controllerId'] = Yii::$app->controller->id;
 
         return parent::beforeAction($action);
     }
@@ -46,16 +42,16 @@ class BaseController extends Controller
             return;
         }
 
-        $this->view->title = $model->{'title_'.$this->shortLanguage};
+        $this->view->title = $model->title;
 
         $this->view->registerMetaTag([
             'name' => 'keywords',
-            'content' => $model->{'metaKeys_'.$this->shortLanguage}
+            'content' => $model->metaKeys
         ]);
 
         $this->view->registerMetaTag([
             'name' => 'description',
-            'content' => $model->{'metaDescription_'.$this->shortLanguage}
+            'content' => $model->metaDescription
         ]);
 
         $this->view->registerLinkTag([
@@ -68,14 +64,5 @@ class BaseController extends Controller
             'hreflang' => 'x-default',
             'href' => Yii::$app->request->hostInfo
         ]);
-
-        foreach (Language::getShortLanguageList() as $shortName) {
-            $this->view->registerLinkTag([
-                'rel' => 'alternate',
-                'hreflang' => $shortName,
-                'href' => rtrim(Yii::$app->request->hostInfo, '/') .
-                    BaseHelper::getSwitchLanguageLink($shortName, Yii::$app->request)
-            ]);
-        }
     }
 }

@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Itstructure\AdminModule\interfaces\ModelInterface;
-
 /**
  * This is the model class for table "social".
  *
@@ -18,7 +16,7 @@ use Itstructure\AdminModule\interfaces\ModelInterface;
  *
  * @package app\models
  */
-class Social extends ActiveRecord implements ModelInterface
+class Social extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -44,13 +42,6 @@ class Social extends ActiveRecord implements ModelInterface
             ],
             [
                 [
-                    'created_at',
-                    'updated_at'
-                ],
-                'safe'
-            ],
-            [
-                [
                     'icon'
                 ],
                 'string',
@@ -62,6 +53,19 @@ class Social extends ActiveRecord implements ModelInterface
                 ],
                 'string',
                 'max' => 255
+            ],
+            [
+                'icon',
+                'unique',
+                'skipOnError'     => true,
+                'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
+            ],
+            [
+                [
+                    'created_at',
+                    'updated_at'
+                ],
+                'safe'
             ],
         ];
     }
@@ -95,6 +99,19 @@ class Social extends ActiveRecord implements ModelInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        $scenarios[self::SCENARIO_CREATE][] = 'contacts';
+        $scenarios[self::SCENARIO_UPDATE][] = 'contacts';
+
+        return $scenarios;
     }
 
     /**
@@ -141,16 +158,6 @@ class Social extends ActiveRecord implements ModelInterface
         $this->linkWithContacts(empty($this->contacts) ? [] : $this->contacts);
 
         parent::afterSave($insert, $changedAttributes);
-    }
-
-    /**
-     * Returns id of the model.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

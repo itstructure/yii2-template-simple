@@ -8,17 +8,17 @@ use app\helpers\BaseHelper;
 /* @var Product[] $products */
 /* @var Pagination $pagination */
 
-$this->params['breadcrumbs'][] = $model->{'title_'.$this->params['shortLanguage']};
+$this->params['breadcrumbs'][] = $model->title;
 ?>
 
-<?php if (!empty($model->{'content_'.$this->params['shortLanguage']})): ?>
+<?php if (!empty($model->content)): ?>
     <section class="inform_block">
 
         <div class="container">
 
             <div class="row" data-animated="fadeIn">
                 <div class="col-lg-12 col-md-12 col-sm-10">
-                    <?php echo $model->{'content_'.$this->params['shortLanguage']} ?>
+                    <?php echo $model->content ?>
                 </div>
             </div>
         </div>
@@ -30,18 +30,18 @@ $this->params['breadcrumbs'][] = $model->{'title_'.$this->params['shortLanguage'
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 col-sm-12 padbot20">
+                <div class="col-lg-12 col-sm-12">
                     <?php /* @var Product $product */ ?>
                     <?php foreach ($products as $product): ?>
                         <div class="post">
                             <h2>
                                 <span class="<?php echo $product->icon ?>"></span>
-                                <a href="<?php echo '/'.$this->params['shortLanguage'].'/product/'.$product->id ?>" alt="<?php echo $product->{'title_'.$this->params['shortLanguage']} ?>">
-                                    <?php echo $product->{'title_'.$this->params['shortLanguage']} ?>
+                                <a href="<?php echo '/product/'.$product->id ?>" alt="<?php echo $product->title ?>">
+                                    <?php echo $product->title ?>
                                 </a>
                             </h2>
                             <div class="post_meta"><?php echo Yii::t('products', 'Posted').' '.BaseHelper::getDateAt($product->updated_at) ?></div>
-                            <?php echo $product->{'description_'.$this->params['shortLanguage']} ?>
+                            <?php echo $product->description ?>
                         </div>
                     <?php endforeach;?>
                     <?php echo LinkPager::widget(['pagination' => $pagination]); ?>

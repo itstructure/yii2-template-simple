@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($searchModel) {
                     /* @var $searchModel ContactSearch */
                     return Html::a(
-                        Html::encode($searchModel->getDefaultTranslate('title')),
+                        Html::encode($searchModel->title),
                         Url::to([$this->params['urlPrefix'].'view', 'id' => $searchModel->id])
                     );
                 },
@@ -73,10 +73,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('app', 'Actions'),
                 'template' => '{view} {update} {delete}',
-                'urlCreator'=>function($action, $model, $key, $index){
+                'urlCreator'=>function($action, $searchModel, $key, $index){
                     return Url::to([
                         $this->params['urlPrefix'].$action,
-                        'id' => $model->id
+                        'id' => $searchModel->id
                     ]);
                 }
             ],

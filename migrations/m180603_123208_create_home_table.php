@@ -1,27 +1,28 @@
 <?php
 
-use Itstructure\AdminModule\components\MultilanguageMigration;
+use yii\db\Migration;
 
 /**
  * Handles the creation of table `home`.
  */
-class m180603_123208_create_home_table extends MultilanguageMigration
+class m180603_123208_create_home_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createMultiLanguageTable('home',
+        $this->createTable('home',
             [
+                'id' => $this->primaryKey(),
                 'title' => $this->string(),
                 'description' => $this->text(),
                 'content' => $this->text(),
                 'metaKeys' => $this->string(),
                 'metaDescription' => $this->string(),
-            ],
-            [
                 'default' => $this->tinyInteger(1)->defaultValue(0),
+                'created_at' => $this->dateTime(),
+                'updated_at' => $this->dateTime(),
             ]
         );
     }
@@ -31,6 +32,6 @@ class m180603_123208_create_home_table extends MultilanguageMigration
      */
     public function safeDown()
     {
-        $this->dropMultiLanguageTable('home');
+        $this->dropTable('home');
     }
 }
