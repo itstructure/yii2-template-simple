@@ -1,20 +1,18 @@
-Yii2 template multilanguage install ducumentation
+Yii2 simple template install ducumentation
 ==============
 
-[![Build Status](https://scrutinizer-ci.com/g/itstructure/yii2-template-multilanguage/badges/build.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-template-multilanguage/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itstructure/yii2-template-multilanguage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-template-multilanguage/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itstructure/yii2-template-simple/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-template-simple/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/itstructure/yii2-template-simple/badges/build.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-template-simple/build-status/master)
 
 1 Introduction
 ----------------------------
 
-Yii2 project template with multilanguage mode, based on [Yii2 basic framework](https://github.com/yiisoft/yii2-app-basic).
-Project is available to install at [Git Hub repository](https://github.com/itstructure/yii2-template-multilanguage).
+Yii2 simple project template, based on [Yii2 basic framework](https://github.com/yiisoft/yii2-app-basic).
+Project is available to install at [Git Hub repository](https://github.com/itstructure/yii2-template-simple).
 
 This template includes:
 - Admin panel, based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE)
-- Ability to content manage with some number of languages.
 - Number of entities, which are managed by admin panel:
-    - Languages
     - Site settings (Initial role and status after registration, e.t.c.)
     - Users
     - RBAC (Set roles and permissions for users)
@@ -45,11 +43,11 @@ This template helps you to easy start your Yii2 project. And then you can change
 1. Clone project.
     ```
     SSH SOURCE:
-    git@github.com:itstructure/yii2-template-multilanguage.git
+    git@github.com:itstructure/yii2-template-simple.git
     ```
     ```
     HTTPS SOURCE:
-    https://github.com/itstructure/yii2-template-multilanguage.git
+    https://github.com/itstructure/yii2-template-simple.git
     ```
 2. Install dependencies by running from the project root ```composer install``` 
  
