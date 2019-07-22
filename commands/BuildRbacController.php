@@ -102,11 +102,15 @@ class BuildRbacController extends Controller
     }
 
     /**
-     * @param Item $item_role
-     * @param Item $item_permission
+     * @param Item|null $item_role
+     * @param Item|null $item_permission
      */
-    private function tryAddChild(Item $item_role, Item $item_permission): void
+    private function tryAddChild(Item $item_role = null, Item $item_permission = null): void
     {
+        if ($item_role == null || $item_permission == null) {
+            return;
+        }
+
         if (!$this->authManager->hasChild($item_role, $item_permission)) {
             $this->authManager->addChild($item_role, $item_permission);
         }

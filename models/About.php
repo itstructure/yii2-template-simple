@@ -147,7 +147,7 @@ class About extends ActiveRecord
     /**
      * Returns the default about record.
      *
-     * @return array|null|\yii\db\ActiveRecord
+     * @return null|\yii\db\ActiveRecord
      */
     public static function getDefaultAbout()
     {

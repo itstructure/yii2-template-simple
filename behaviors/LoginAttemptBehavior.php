@@ -75,7 +75,7 @@ class LoginAttemptBehavior extends Behavior
             '>', 'reset_at', time()
         ])->one();
 
-        if ($this->_attempt) {
+        if ($this->_attempt instanceof LoginAttempt) {
             if ($this->_attempt->amount >= $this->attempts) {
                 $this->owner->addError($this->errorAttribute, $this->message);
             }

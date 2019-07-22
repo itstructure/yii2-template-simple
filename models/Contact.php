@@ -127,7 +127,7 @@ class Contact extends ActiveRecord
     /**
      * Returns the default contacts record.
      *
-     * @return array|null|\yii\db\ActiveRecord
+     * @return null|\yii\db\ActiveRecord
      */
     public static function getDefaultContacts()
     {
