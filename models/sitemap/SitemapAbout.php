@@ -4,8 +4,6 @@ namespace app\models\sitemap;
 
 use yii\helpers\Url;
 use dreamjobs\sitemap\interfaces\Basic;
-use dreamjobs\sitemap\interfaces\GoogleAlternateLang;
-use Itstructure\AdminModule\models\Language;
 use app\models\About;
 
 /**
@@ -13,7 +11,7 @@ use app\models\About;
  *
  * @package app\commands\models\sitemap
  */
-class SitemapAbout extends About implements Basic, GoogleAlternateLang
+class SitemapAbout extends About implements Basic
 {
     /**
      * Handle materials by selecting batch of elements.
@@ -22,18 +20,6 @@ class SitemapAbout extends About implements Basic, GoogleAlternateLang
      * @var int
      */
     public $sitemapBatchSize = 10;
-    /**
-     * List of available site languages
-     *
-     * @var array [langId => langCode]
-     */
-    public $sitemapLanguages = [];
-    /**
-     * If TRUE - Yii::$app->language will be switched for each sitemapLanguages and restored after.
-     *
-     * @var bool
-     */
-    public $sitemapSwithLanguages = true;
 
     /**
      * @var About
@@ -43,27 +29,20 @@ class SitemapAbout extends About implements Basic, GoogleAlternateLang
     /**
      * @inheritdoc
      */
-    public function init()
-    {
-        $this->sitemapLanguages = Language::getShortLanguageList();
-
-        parent::init();
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getSitemapItems($lang = null)
     {
         $this->model = About::getDefaultAbout();
 
+        if (empty($this->model)) {
+            return null;
+        }
+
         return [
             [
-                'loc' => Url::to('/' . $lang . '/about', true),
+                'loc' => Url::to('/about', true),
                 'lastmod' => $this->getSitemapLastmod(),
                 'changefreq' => $this->getSitemapChangefreq(),
                 'priority' => $this->getSitemapPriority(),
-                'alternateLinks' => $this->getSitemapAlternateLinks(),
             ],
         ];
     }
@@ -81,7 +60,7 @@ class SitemapAbout extends About implements Basic, GoogleAlternateLang
      */
     public function getSitemapLoc($lang = null)
     {
-        return Url::to('/' . $lang . '/about', true);
+        return Url::to('/about', true);
     }
 
     /**
@@ -106,19 +85,5 @@ class SitemapAbout extends About implements Basic, GoogleAlternateLang
     public function getSitemapPriority($lang = null)
     {
         return static::PRIORITY_8;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getSitemapAlternateLinks()
-    {
-        $buffer = [];
-
-        foreach ($this->sitemapLanguages as $langCode) {
-            $buffer[$langCode] = $this->getSitemapLoc($langCode);
-        }
-
-        return $buffer;
     }
 }
