@@ -94,7 +94,7 @@ $config = [
             'translations' => $translations
         ],
     ],
-    'defaultRoute' => '/en/home/index',
+    'defaultRoute' => '/home/index',
     'params' => $params,
 ];
 
