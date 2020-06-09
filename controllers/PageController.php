@@ -48,22 +48,22 @@ class PageController extends BaseController
      *
      * @throws NotFoundHttpException
      */
-    public function actionView($id)
+    public function actionView($alias)
     {
         $model = Page::find()->where([
-            'id' => $id
+            'alias' => $alias
         ])->andWhere([
             'active' => 1
         ])->one();
 
         if (null === $model) {
-            throw new NotFoundHttpException('Page not fount with id = '.$id.'.');
+            throw new NotFoundHttpException('Page not fount with alias = '.$alias.'.');
         }
 
         $this->setMetaParams($model);
 
         $productsQuery = Product::find()->where([
-            'pageId' => $id
+            'pageId' => $model->id
         ])->andWhere([
             'active' => 1
         ]);

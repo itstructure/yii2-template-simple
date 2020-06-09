@@ -46,7 +46,7 @@ class SitemapProduct extends Product implements Basic
      */
     public function getSitemapLoc($lang = null)
     {
-        return Url::to('/product/' . $this->id, true);
+        return Url::to('/product/' . $this->alias, true);
     }
 
     /**

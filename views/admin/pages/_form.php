@@ -71,6 +71,11 @@ use Itstructure\MFUploader\models\album\Album;
                 'form'          => $form,
             ]) ?>
 
+            <?php echo $form->field($model, 'alias')->textInput([
+                'maxlength' => true,
+                'style' => 'width: 25%;'
+            ])->label(Yii::t('app', 'URL Alias')); ?>
+
             <?php echo $form->field($model, 'icon')->textInput([
                 'maxlength' => true,
                 'style' => 'width: 25%;'

@@ -25,6 +25,7 @@ use app\traits\ThumbnailTrait;
  * @property string $updated_at
  * @property int $pageId
  * @property string $icon
+ * @property string $alias
  * @property int $active
  *
  * @property Page $page
@@ -81,7 +82,8 @@ class Product extends ActiveRecord
                     'description',
                     'content',
                     'pageId',
-                    'active'
+                    'active',
+                    'alias',
                 ],
                 'required'
             ],
@@ -96,7 +98,8 @@ class Product extends ActiveRecord
                 [
                     'title',
                     'metaKeys',
-                    'metaDescription'
+                    'metaDescription',
+                    'alias',
                 ],
                 'string',
                 'max' => 255
@@ -114,6 +117,21 @@ class Product extends ActiveRecord
                 ],
                 'string',
                 'max' => 64
+            ],
+            [
+                'alias',
+                'filter',
+                'filter' => function ($value) {
+                    return preg_replace( '/[^a-z0-9_]+/', '-', strtolower(trim($value)));
+                }
+            ],
+            [
+                'alias',
+                'unique',
+                'skipOnError'     => true,
+                'targetClass'     => static::class,
+                'targetAttribute' => ['alias' => 'alias'],
+                'filter' => 'id != '.$this->id
             ],
             [
                 [
@@ -199,6 +217,7 @@ class Product extends ActiveRecord
             'id',
             'pageId',
             'icon',
+            'alias',
             'active',
             'title',
             'description',
@@ -220,6 +239,7 @@ class Product extends ActiveRecord
             'pageId' => 'Page ID',
             'icon' => 'Icon',
             'active' => 'Active',
+            'alias' => 'URL Alias',
             'title' => 'Title',
             'description' => 'Description',
             'content' => 'Content',

@@ -8,7 +8,7 @@ if (!isset($linkOptions)) {
 }
 
 echo Html::a($data->title,
-    Url::to('/page/'.$data->id),
+    Url::to('/page/'.$data->alias),
     ArrayHelper::merge([
         'target' => '_self'
     ], $linkOptions)

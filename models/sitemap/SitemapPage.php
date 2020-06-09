@@ -46,7 +46,7 @@ class SitemapPage extends Page implements Basic
      */
     public function getSitemapLoc($lang = null)
     {
-        return Url::to('/page/' . $this->id, true);
+        return Url::to('/page/' . $this->alias, true);
     }
 
     /**

@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $model->title;
                         <div class="post">
                             <h2>
                                 <span class="<?php echo $product->icon ?>"></span>
-                                <a href="<?php echo '/product/'.$product->id ?>" alt="<?php echo $product->title ?>">
+                                <a href="<?php echo '/product/'.$product->alias ?>" alt="<?php echo $product->title ?>">
                                     <?php echo $product->title ?>
                                 </a>
                             </h2>

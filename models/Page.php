@@ -26,6 +26,7 @@ use app\traits\ThumbnailTrait;
  * @property int $parentId
  * @property int $newParentId
  * @property string $icon
+ * @property string $alias
  * @property int $active
  *
  * @package app\models
@@ -78,7 +79,8 @@ class Page extends ActiveRecord
                 [
                     'title',
                     'content',
-                    'active'
+                    'active',
+                    'alias',
                 ],
                 'required',
             ],
@@ -94,6 +96,7 @@ class Page extends ActiveRecord
                     'title',
                     'metaKeys',
                     'metaDescription',
+                    'alias',
                 ],
                 'string',
                 'max' => 255,
@@ -110,6 +113,21 @@ class Page extends ActiveRecord
                 'icon',
                 'string',
                 'max' => 64,
+            ],
+            [
+                'alias',
+                'filter',
+                'filter' => function ($value) {
+                    return preg_replace( '/[^a-z0-9_]+/', '-', strtolower(trim($value)));
+                }
+            ],
+            [
+                'alias',
+                'unique',
+                'skipOnError'     => true,
+                'targetClass'     => static::class,
+                'targetAttribute' => ['alias' => 'alias'],
+                'filter' => 'id != '.$this->id
             ],
             [
                 UploadModelInterface::FILE_TYPE_THUMB,
@@ -175,6 +193,7 @@ class Page extends ActiveRecord
             'id',
             'parentId',
             'icon',
+            'alias',
             'active',
             'newParentId',
             'title',
@@ -197,6 +216,7 @@ class Page extends ActiveRecord
             'parentId' => 'Parent Id',
             'icon' => 'Icon',
             'active' => 'Active',
+            'alias' => 'URL Alias',
             'title' => 'Title',
             'description' => 'Description',
             'content' => 'Content',
@@ -242,7 +262,7 @@ class Page extends ActiveRecord
     public static function getMenu()
     {
         return static::find()->select([
-            'id', 'parentId'
+            'id', 'parentId', 'title'
         ])->all();
     }
 
@@ -252,7 +272,7 @@ class Page extends ActiveRecord
     public static function getActiveMenu()
     {
         return static::find()->select([
-            'id', 'parentId'
+            'id', 'parentId', 'title', 'alias'
         ])->where([
             'active' => 1
         ])->all();
