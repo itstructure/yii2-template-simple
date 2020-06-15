@@ -72,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => Yii::t('feedback', 'Message'),
                 'value' => $model->message,
+                'format' => 'raw',
             ],
             [
                 'attribute' => 'created_at',

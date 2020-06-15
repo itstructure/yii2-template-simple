@@ -126,8 +126,7 @@ class Page extends ActiveRecord
                 'unique',
                 'skipOnError'     => true,
                 'targetClass'     => static::class,
-                'targetAttribute' => ['alias' => 'alias'],
-                'filter' => 'id != '.$this->id
+                'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
             ],
             [
                 UploadModelInterface::FILE_TYPE_THUMB,
@@ -147,6 +146,7 @@ class Page extends ActiveRecord
                 'title',
                 'unique',
                 'skipOnError'     => true,
+                'targetClass'     => static::class,
                 'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
             ],
             [

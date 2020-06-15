@@ -18,6 +18,11 @@ class HomeController extends CommonAdminController
     use AdminBeforeActionTrait, AccessTrait;
 
     /**
+     * @var bool
+     */
+    protected $setEditingScenarios = true;
+
+    /**
      * Set home record as default.
      *
      * @param $homeId

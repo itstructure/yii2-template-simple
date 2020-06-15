@@ -58,6 +58,7 @@ class Social extends ActiveRecord
                 'icon',
                 'unique',
                 'skipOnError'     => true,
+                'targetClass'     => static::class,
                 'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
             ],
             [

@@ -18,6 +18,11 @@ class AboutController extends CommonAdminController
     use AdminBeforeActionTrait, AccessTrait;
 
     /**
+     * @var bool
+     */
+    protected $setEditingScenarios = true;
+
+    /**
      * Set about record as default.
      *
      * @param $aboutId

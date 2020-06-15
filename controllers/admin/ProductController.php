@@ -21,6 +21,11 @@ class ProductController extends CommonAdminController
     use AdminBeforeActionTrait, AccessTrait;
 
     /**
+     * @var bool
+     */
+    protected $setEditingScenarios = true;
+
+    /**
      * @return mixed|string
      */
     public function actionIndex()

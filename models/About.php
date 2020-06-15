@@ -72,6 +72,7 @@ class About extends ActiveRecord
                 'title',
                 'unique',
                 'skipOnError'     => true,
+                'targetClass'     => static::class,
                 'filter' => $this->getScenario() == self::SCENARIO_UPDATE ? 'id != '.$this->id : ''
             ],
             [

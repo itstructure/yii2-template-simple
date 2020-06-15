@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4debbc89421eeceb1b97b838b482eeb8",
+    "content-hash": "210b70ec4f6b1468021d7e2585f648b9",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -842,16 +842,16 @@
         },
         {
             "name": "itstructure/yii2-admin-module",
-            "version": "1.7.4",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itstructure/yii2-admin-module.git",
-                "reference": "b5de4561b9d27ef3a586892a89ae78c75529a941"
+                "reference": "2160feac8b4b1005c1d27c1b1ceed8dbfbe149fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itstructure/yii2-admin-module/zipball/b5de4561b9d27ef3a586892a89ae78c75529a941",
-                "reference": "b5de4561b9d27ef3a586892a89ae78c75529a941",
+                "url": "https://api.github.com/repos/itstructure/yii2-admin-module/zipball/2160feac8b4b1005c1d27c1b1ceed8dbfbe149fd",
+                "reference": "2160feac8b4b1005c1d27c1b1ceed8dbfbe149fd",
                 "shasum": ""
             },
             "require": {
@@ -885,7 +885,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2020-06-12T04:46:40+00:00"
+            "time": "2020-06-15T14:18:56+00:00"
         },
         {
             "name": "itstructure/yii2-ckeditor",

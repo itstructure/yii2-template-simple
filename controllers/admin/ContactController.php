@@ -18,6 +18,11 @@ class ContactController extends CommonAdminController
     use AdminBeforeActionTrait, AccessTrait;
 
     /**
+     * @var bool
+     */
+    protected $setEditingScenarios = true;
+
+    /**
      * Set contacts record as default.
      *
      * @param $contactId

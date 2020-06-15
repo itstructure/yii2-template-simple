@@ -67,10 +67,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'description',
                 'label' => Yii::t('app', 'Description'),
+                'format' => 'raw',
             ],
             [
                 'attribute' => 'content',
                 'label' => Yii::t('app', 'Content'),
+                'format' => 'raw',
             ],
             [
                 'attribute' => 'metaKeys',
