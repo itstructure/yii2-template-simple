@@ -11,7 +11,9 @@ Yii2 simple project template, based on [Yii2 basic framework](https://github.com
 Project is available to install at [Git Hub repository](https://github.com/itstructure/yii2-template-simple).
 
 This template includes:
+
 - Admin panel, based on [AdminLTE](https://github.com/almasaeed2010/AdminLTE)
+
 - Number of entities, which are managed by admin panel:
     - Site settings (Initial role and status after registration, e.t.c.)
     - Users
@@ -41,21 +43,19 @@ This template helps you to easy start your Yii2 project. And then you can change
 ----------------------------
 
 1. Clone project.
-    ```
-    SSH SOURCE:
-    git@github.com:itstructure/yii2-template-simple.git
-    ```
-    ```
-    HTTPS SOURCE:
-    https://github.com/itstructure/yii2-template-simple.git
-    ```
-2. Install dependencies by running from the project root ```composer install``` 
+
+    `SSH SOURCE: git@github.com:itstructure/yii2-template-simple.git`
+    
+    `HTTPS SOURCE: https://github.com/itstructure/yii2-template-simple.git`
+    
+2. Install dependencies by running from the project root `composer install`
  
 3. Create new data base.
 
-4. Copy file ```db_example.php``` to ```db.php```. In file ```db.php``` set the settings according to the settings for accessing the MySql server. Enter the name of the created data base.
+4. Copy file `db_example.php` to `db.php`. In file `db.php` set the settings according to the settings for accessing the MySql server. Enter the name of the created data base.
 
     Example:
+    
     ```php
     return [
         'class' => 'yii\db\Connection',
@@ -66,41 +66,39 @@ This template helps you to easy start your Yii2 project. And then you can change
     ];
     ```
 
-5. Run the RBAC migration: 
-    ```
-    yii migrate --migrationPath=@yii/rbac/migrations
-    ```
-6. Run the command to build initial rbac entities: 
-    ```
-    yii build-rbac
-    ```
+5. Run the RBAC migration:
+
+    `yii migrate --migrationPath=@yii/rbac/migrations`
+    
+6. Run the command to build initial rbac entities:
+
+    `yii build-rbac`
     
     Roles and permissions will be created with the following structure:
-    ```php
-    |--------------------|-----------------------------|
-    |                    |            Roles            |
-    |                    |-----------------------------|
-    | Permissions        |  admin  | manager |  user   |
-    |--------------------|---------|---------|---------|
-    | CREATE             |    X    |         |         |
-    | UPDATE             |    X    |         |         |
-    | DELETE             |    X    |         |         |
-    | SET_ROLES          |    X    |         |         |
-    | VIEW_BACKSIDE      |    X    |    X    |         |
-    | VIEW_FRONTSIDE     |    X    |    X    |    X    |
-    |--------------------|---------|---------|---------|
-    ```
+    
+        |--------------------|-----------------------------|
+        |                    |            Roles            |
+        |                    |-----------------------------|
+        | Permissions        |  admin  | manager |  user   |
+        |--------------------|---------|---------|---------|
+        | CREATE             |    X    |         |         |
+        | UPDATE             |    X    |         |         |
+        | DELETE             |    X    |         |         |
+        | SET_ROLES          |    X    |         |         |
+        | VIEW_BACKSIDE      |    X    |    X    |         |
+        | VIEW_FRONTSIDE     |    X    |    X    |    X    |
+        |--------------------|---------|---------|---------|
     
 7. Run MFU module migration:
-    ```
-    yii migrate --migrationPath=@mfuploader/migrations
-    ```
+
+    `yii migrate --migrationPath=@mfuploader/migrations`
+    
 8. Run the application migration:
-    ```
-    yii migrate
-    ```
+
+    `yii migrate`
     
 9. If you are going to use google captcha, it is necessary to set captcha params in new captcha.php config file:
+
     ```php
     return [
         'site_key' => '...',
@@ -109,9 +107,10 @@ This template helps you to easy start your Yii2 project. And then you can change
     ```
     
 10. If you are going to load some files to Amazon remote storage by [MFUploader module](https://github.com/itstructure/yii2-multi-format-uploader), it is necessary to set AWS access params in new aws-credentials.php config file:
+    
     ```php
     return [
-        'aws_access_key_id' => '...',
-        'aws_secret_access_key' => '...',
+        'key' => '...',
+        'secret' => '...',
     ];
     ```

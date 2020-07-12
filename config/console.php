@@ -48,7 +48,7 @@ $config = [
     ],
     'controllerMap' => [
         'sitemap' => [
-            'class' => 'dreamjobs\sitemap\SitemapController',
+            'class' => 'Itstructure\Sitemap\SitemapController',
             'baseUrl' => YII_DEBUG ? 'http://yii2-template-simple' : 'http://yii2-template-simple',
             'modelsPath' => '@app/models/sitemap', // Sitemap-data models directory
             'modelsNamespace' => 'app\models\sitemap', // Namespace in [[modelsPath]] files
