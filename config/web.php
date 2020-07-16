@@ -3,12 +3,13 @@
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $translations = require __DIR__ . '/translations.php';
+$baseUrl = require __DIR__ . '/base-url.php';
 
 $config = [
     'id' => 'yii2_template_simple',
     'version' => '1.0.0',
     'basePath' => dirname(__DIR__),
-    'homeUrl' => YII_DEBUG ? 'http://yii2-template-simple' : 'http://yii2-template-simple',
+    'homeUrl' => $baseUrl,
     'bootstrap' => ['log'],
     'language' => 'en-US',
     'aliases' => [
