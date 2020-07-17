@@ -1,4 +1,4 @@
-Yii2 simple template install ducumentation
+Yii2 simple template install documentation
 ==============
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itstructure/yii2-template-simple/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-template-simple/?branch=master)
