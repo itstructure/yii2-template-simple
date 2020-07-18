@@ -5,7 +5,10 @@ use Itstructure\AdminModule\Module as AdminModule;
 use Itstructure\RbacModule\Module as RbacModule;
 use Itstructure\MFUploader\Module as MFUModule;
 
-// comment out the following two lines when deployed to production
+if (file_exists(__DIR__ . '/../config/environment.php')) {
+    require __DIR__ . '/../config/environment.php';
+}
+
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 
