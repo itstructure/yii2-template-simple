@@ -15,7 +15,7 @@ class m190502_163142_create_positions_table extends Migration
         $this->createTable('positions',
             [
                 'id' => $this->primaryKey(),
-                'name' => $this->string(),
+                'name' => $this->string(64)->notNull(),
                 'created_at' => $this->dateTime(),
                 'updated_at' => $this->dateTime(),
             ]

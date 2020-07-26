@@ -16,13 +16,14 @@ class m180508_092223_create_pages_table extends Migration
             [
                 'id' => $this->primaryKey(),
                 'parentId' => $this->integer(),
-                'active' => $this->tinyInteger(1)->notNull()->defaultValue(0),
-                'icon' => $this->string(64),
-                'title' => $this->string(),
+                'active' => $this->tinyInteger()->notNull()->defaultValue(0),
+                'icon' => $this->string(128),
+                'title' => $this->string(128)->notNull(),
                 'description' => $this->text(),
                 'content' => $this->text(),
-                'metaKeys' => $this->string(),
+                'metaKeys' => $this->string(128),
                 'metaDescription' => $this->string(),
+                'alias' => $this->string(128),
                 'created_at' => $this->dateTime(),
                 'updated_at' => $this->dateTime(),
             ]
@@ -39,6 +40,12 @@ class m180508_092223_create_pages_table extends Migration
             'pages',
             'active'
         );
+
+        $this->createIndex(
+            'idx-pages-alias',
+            'pages',
+            'alias'
+        );
     }
 
     /**
@@ -53,6 +60,11 @@ class m180508_092223_create_pages_table extends Migration
 
         $this->dropIndex(
             'idx-pages-active',
+            'pages'
+        );
+
+        $this->dropIndex(
+            'idx-pages-alias',
             'pages'
         );
 

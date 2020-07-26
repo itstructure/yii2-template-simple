@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 use Itstructure\MFUploader\behaviors\{BehaviorMediafile, BehaviorAlbum};
 use Itstructure\MFUploader\models\OwnerAlbum;
@@ -23,12 +24,13 @@ use app\traits\ThumbnailTrait;
  * @property string $metaDescription
  * @property string $created_at
  * @property string $updated_at
- * @property int $pageId
+ * @property int $categoryId
  * @property string $icon
  * @property string $alias
+ * @property float $price
  * @property int $active
  *
- * @property Page $page
+ * @property Category $category
  *
  * @package app\models
  */
@@ -52,14 +54,13 @@ class Product extends ActiveRecord
     public $albums = [];
 
     /**
-     * Initialize.
-     * Set albums, that product has.
+     * Init albums.
      */
-    public function init()
+    public function afterFind()
     {
         $this->albums = $this->getAlbums();
 
-        parent::init();
+        parent::afterFind();
     }
 
     /**
@@ -81,9 +82,12 @@ class Product extends ActiveRecord
                     'title',
                     'description',
                     'content',
-                    'pageId',
+                    'categoryId',
                     'active',
                     'alias',
+                    'price',
+                    'metaKeys',
+                    'metaDescription',
                 ],
                 'required'
             ],
@@ -96,27 +100,33 @@ class Product extends ActiveRecord
             ],
             [
                 [
+                    'icon',
                     'title',
                     'metaKeys',
-                    'metaDescription',
                     'alias',
+                ],
+                'string',
+                'max' => 128
+            ],
+            [
+                [
+                    'metaDescription',
                 ],
                 'string',
                 'max' => 255
             ],
             [
                 [
-                    'pageId',
+                    'categoryId',
                     'active'
                 ],
                 'integer'
             ],
             [
                 [
-                    'icon'
+                    'price'
                 ],
-                'string',
-                'max' => 64
+                'number'
             ],
             [
                 'alias',
@@ -134,12 +144,12 @@ class Product extends ActiveRecord
             ],
             [
                 [
-                    'pageId'
+                    'categoryId'
                 ],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Page::class,
-                'targetAttribute' => ['pageId' => 'id']
+                'targetClass' => Category::class,
+                'targetAttribute' => ['categoryId' => 'id']
             ],
             [
                 UploadModelInterface::FILE_TYPE_THUMB,
@@ -215,8 +225,9 @@ class Product extends ActiveRecord
             UploadModelInterface::FILE_TYPE_IMAGE,
             'albums',
             'id',
-            'pageId',
+            'categoryId',
             'icon',
+            'price',
             'alias',
             'active',
             'title',
@@ -236,27 +247,28 @@ class Product extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'pageId' => 'Page ID',
-            'icon' => 'Icon',
-            'active' => 'Active',
-            'alias' => 'URL Alias',
-            'title' => 'Title',
-            'description' => 'Description',
-            'content' => 'Content',
-            'metaKeys' => 'Meta Keys',
-            'metaDescription' => 'Meta Description',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'categoryId' => Yii::t('products', 'Parent category'),
+            'icon' => Yii::t('app', 'Icon'),
+            'price' => Yii::t('products', 'Price'),
+            'active' => Yii::t('app', 'Active status'),
+            'alias' => Yii::t('app', 'URL Alias'),
+            'title' => Yii::t('app', 'Title'),
+            'description' => Yii::t('app', 'Description'),
+            'content' => Yii::t('app', 'Content'),
+            'metaKeys' => Yii::t('app', 'Meta keys'),
+            'metaDescription' => Yii::t('app', 'Meta description'),
+            'created_at' => Yii::t('app', 'Created date'),
+            'updated_at' => Yii::t('app', 'Updated date'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPage()
+    public function getCategory()
     {
-        return $this->hasOne(Page::class, [
-            'id' => 'pageId'
+        return $this->hasOne(Category::class, [
+            'id' => 'categoryId'
         ]);
     }
 

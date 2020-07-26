@@ -15,9 +15,9 @@ class m190220_013101_create_qualities_table extends Migration
         $this->createTable('qualities',
             [
                 'id' => $this->primaryKey(),
-                'title' => $this->string()->notNull(),
-                'description' => $this->string(1024)->notNull(),
-                'icon' => $this->string(64)->notNull(),
+                'title' => $this->string(128)->notNull(),
+                'description' => $this->text()->notNull(),
+                'icon' => $this->string(128)->notNull(),
                 'created_at' => $this->dateTime(),
                 'updated_at' => $this->dateTime(),
             ]

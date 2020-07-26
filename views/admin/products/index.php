@@ -33,18 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 
             'id',
-            'icon' => [
-                'label' => Yii::t('app', 'Icon'),
-                'value' => function($searchModel) {
-                    /* @var $searchModel ProductSearch */
-                    return Html::a(
-                        Html::tag('i', '', ['class' => empty($searchModel->icon) ? 'fa fa-file fa-2x' : $searchModel->icon]),
-                        Url::to([$this->params['urlPrefix'].'view', 'id' => $searchModel->id])
-                    );
-                },
-                'format' => 'raw',
-            ],
-            [
+            'thumbnail' => [
                 'label' => MFUModule::t('main', 'Thumbnail'),
                 'value' => function($data) {
                     /* @var $data ProductSearch */
@@ -53,6 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         $this->params['urlPrefix'].'view',
                         'id' => $data->id
                     ])) : '';
+                },
+                'format' => 'raw',
+            ],
+            'icon' => [
+                'label' => Yii::t('app', 'Icon'),
+                'value' => function($searchModel) {
+                    /* @var $searchModel ProductSearch */
+                    return Html::a(
+                        Html::tag('i', '', ['class' => empty($searchModel->icon) ? 'fa fa-file fa-2x' : $searchModel->icon]),
+                        Url::to([$this->params['urlPrefix'].'view', 'id' => $searchModel->id])
+                    );
                 },
                 'format' => 'raw',
             ],
@@ -67,6 +67,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
+            'price' => [
+                'label' => Yii::t('products', 'Price'),
+                'value' => function($searchModel) {
+                    /* @var $searchModel ProductSearch */
+                    return $searchModel->price;
+                },
+                'format' => 'raw',
+            ],
             'description' => [
                 'label' => Yii::t('app', 'Description'),
                 'value' => function($searchModel) {
@@ -75,13 +83,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
-            'page' => [
-                'label' => Yii::t('products', 'Parent page'),
+            'category' => [
+                'label' => Yii::t('products', 'Parent category'),
                 'value' => function ($searchModel) {
                     /* @var $searchModel app\models\ProductSearch */
-                    return null === $searchModel->page ? '' : Html::a(
-                        $searchModel->page->title,
-                        Url::to(['/admin/pages/view', 'id' => $searchModel->page->id]),
+                    return null === $searchModel->category ? '' : Html::a(
+                        $searchModel->category->title,
+                        Url::to(['/admin/categories/view', 'id' => $searchModel->category->id]),
                         [
                             'target' => '_blank'
                         ]

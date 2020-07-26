@@ -2,8 +2,9 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use yii\data\{ActiveDataProvider, Pagination};
 
 /**
  * PageSearch represents the model behind the search form of `app\models\Page`.
@@ -21,6 +22,13 @@ class PageSearch extends Page
             [
                 ['id'],
                 'integer',
+            ],
+            [
+                [
+                    'title',
+                    'description'
+                ],
+                'string',
             ],
             [
                 [
@@ -72,6 +80,16 @@ class PageSearch extends Page
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'description', $this->description]);
+
+        $pagination = new Pagination([
+            'defaultPageSize' => Yii::$app->params['defaultPageSize'],
+            'totalCount' => $query->count(),
+        ]);
+
+        $dataProvider->setPagination($pagination);
 
         return $dataProvider;
     }

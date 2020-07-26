@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveQuery;
 
 /**
@@ -44,10 +45,11 @@ class Quality extends ActiveRecord
             ],
             [
                 [
+                    'icon',
                     'title'
                 ],
                 'string',
-                'max' => 255
+                'max' => 128
             ],
             [
                 [
@@ -55,13 +57,6 @@ class Quality extends ActiveRecord
                 ],
                 'string',
                 'max' => 1024
-            ],
-            [
-                [
-                    'icon'
-                ],
-                'string',
-                'max' => 64
             ],
             [
                 'title',
@@ -117,12 +112,12 @@ class Quality extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'icon' => 'Icon',
-            'title' => 'Title',
-            'description' => 'Description',
-            'about' => 'About',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'icon' => Yii::t('app', 'Icon html class'),
+            'title' => Yii::t('app', 'Title'),
+            'description' => Yii::t('app', 'Description'),
+            'about' => Yii::t('about', 'About'),
+            'created_at' => Yii::t('app', 'Created date'),
+            'updated_at' => Yii::t('app', 'Updated date'),
         ];
     }
 

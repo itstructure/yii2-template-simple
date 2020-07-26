@@ -15,30 +15,32 @@ class m180524_101831_create_products_table extends Migration
         $this->createTable('products',
             [
                 'id' => $this->primaryKey(),
-                'title' => $this->string(),
+                'categoryId' => $this->integer(),
+                'active' => $this->tinyInteger()->notNull()->defaultValue(0),
+                'icon' => $this->string(128),
+                'title' => $this->string(128),
                 'description' => $this->text(),
                 'content' => $this->text(),
-                'metaKeys' => $this->string(),
+                'metaKeys' => $this->string(128),
                 'metaDescription' => $this->string(),
-                'pageId' => $this->integer(),
-                'active' => $this->tinyInteger(1)->notNull()->defaultValue(0),
-                'icon' => $this->string(64),
+                'alias' => $this->string(128),
+                'price' => $this->float(2),
                 'created_at' => $this->dateTime(),
                 'updated_at' => $this->dateTime(),
             ]
         );
 
         $this->createIndex(
-            'idx-products-pageId',
+            'idx-products-categoryId',
             'products',
-            'pageId'
+            'categoryId'
         );
 
         $this->addForeignKey(
-            'fk-products-pageId',
+            'fk-products-categoryId',
             'products',
-            'pageId',
-            'pages',
+            'categoryId',
+            'categories',
             'id',
             'SET NULL'
         );
@@ -48,6 +50,18 @@ class m180524_101831_create_products_table extends Migration
             'products',
             'active'
         );
+
+        $this->createIndex(
+            'idx-products-alias',
+            'products',
+            'alias'
+        );
+
+        $this->createIndex(
+            'idx-products-price',
+            'products',
+            'price'
+        );
     }
 
     /**
@@ -56,17 +70,27 @@ class m180524_101831_create_products_table extends Migration
     public function safeDown()
     {
         $this->dropIndex(
+            'idx-products-price',
+            'products'
+        );
+
+        $this->dropIndex(
+            'idx-products-alias',
+            'products'
+        );
+
+        $this->dropIndex(
             'idx-products-active',
             'products'
         );
 
         $this->dropForeignKey(
-            'fk-products-pageId',
+            'fk-products-categoryId',
             'products'
         );
 
         $this->dropIndex(
-            'idx-products-pageId',
+            'idx-products-categoryId',
             'products'
         );
 

@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use Itstructure\MultiLevelMenu\MenuWidget;
+use app\models\PageSearch;
 
+/* @var $searchModel PageSearch */
 /* @var $this Itstructure\AdminModule\components\AdminView */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -11,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php echo Html::a(Yii::t('pages', 'Create page'), [

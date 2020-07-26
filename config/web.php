@@ -78,7 +78,7 @@ $config = [
                 '/<action:(reg|login)>' => 'site/<action>',
                 '/<controller:(contact|site)>/captcha' => '<controller>/captcha',
                 '/<controller:(home|about|contact|site)>' => '<controller>/index',
-                '/<controller:(page|product)>/<alias>' => '<controller>/view',
+                '/<controller:(page|category|article|product)>/<alias>' => '<controller>/view',
                 '<controller:(ajax/feedback-ajax)>/<action:(send)>' => '<controller>/<action>',
                 '<controller:(ajax/recaptcha-ajax)>/<action:(validate)>' => '<controller>/<action>',
 

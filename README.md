@@ -20,7 +20,9 @@ This template includes:
     - RBAC (Set roles and permissions for users)
     - Positions
     - Pages
-        - Products (child products for pages)
+        - Articles (child articles for pages)
+    - Categories
+        - Products (child products for categories)
     - Feedback
     - About (about company page)
         - Technologies (child)

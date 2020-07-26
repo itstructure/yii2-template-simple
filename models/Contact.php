@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "contacts".
  *
@@ -42,6 +44,8 @@ class Contact extends ActiveRecord
             [
                 [
                     'title',
+                    'metaKeys',
+                    'metaDescription'
                 ],
                 'required'
             ],
@@ -49,31 +53,18 @@ class Contact extends ActiveRecord
                 [
                     'title',
                     'metaKeys',
-                    'metaDescription'
-                ],
-                'string',
-                'max' => 255
-            ],
-            [
-                [
-                    'address'
+                    'address',
+                    'email',
+                    'phone',
+                    'mapQ',
                 ],
                 'string',
                 'max' => 128
             ],
             [
-                [
-                    'email'
-                ],
+                'metaDescription',
                 'string',
-                'max' => 64
-            ],
-            [
-                [
-                    'phone'
-                ],
-                'string',
-                'max' => 32
+                'max' => 255
             ],
             [
                 [
@@ -81,11 +72,6 @@ class Contact extends ActiveRecord
                     'mapZoom'
                 ],
                 'integer'
-            ],
-            [
-                'mapQ',
-                'string',
-                'max' => 255
             ],
             [
                 'title',
@@ -111,17 +97,17 @@ class Contact extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'default' => 'Default',
-            'title' => 'Title',
-            'address' => 'Address',
-            'email' => 'Email',
-            'phone' => 'Phone',
-            'metaKeys' => 'Meta Keys',
-            'metaDescription' => 'Meta Description',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'mapQ' => 'Map place',
-            'mapZoom' => 'Map zoom',
+            'default' => Yii::t('app', 'Default'),
+            'title' => Yii::t('contacts', 'Title'),
+            'address' => Yii::t('contacts', 'Address'),
+            'email' => Yii::t('contacts', 'Email'),
+            'phone' => Yii::t('contacts', 'Phone'),
+            'metaKeys' => Yii::t('app', 'Meta keys'),
+            'metaDescription' => Yii::t('app', 'Meta description'),
+            'created_at' => Yii::t('app', 'Created date'),
+            'updated_at' => Yii::t('app', 'Updated date'),
+            'mapQ' => Yii::t('contacts', 'Map place'),
+            'mapZoom' => Yii::t('contacts', 'Map zoom'),
         ];
     }
 

@@ -36,6 +36,10 @@ class SitemapPage extends Page implements Basic
     {
         return static::find()->where([
                 'active' => 1
+            ])->andWhere([
+                'NOT', ['alias' => null]
+            ])->andWhere([
+                'NOT', ['alias' => '']
             ])->orderBy([
                 'id' => SORT_DESC
             ]);

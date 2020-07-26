@@ -5,6 +5,7 @@ namespace app\controllers;
 use yii\web\NotFoundHttpException;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\ArrayHelper;
+use Itstructure\MFUploader\models\OwnerMediafile;
 use app\models\Product;
 
 /**
@@ -60,8 +61,11 @@ class ProductController extends BaseController
 
         $this->setMetaParams($model);
 
+        $images = OwnerMediafile::getImageFiles(Product::tableName(), $model->id);
+
         return $this->render('view', [
-            'model' => $model
+            'model' => $model,
+            'images' => $images
         ]);
     }
 }

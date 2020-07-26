@@ -15,12 +15,12 @@ class m180531_134500_create_about_table extends Migration
         $this->createTable('about',
             [
                 'id' => $this->primaryKey(),
-                'title' => $this->string(),
+                'title' => $this->string(128)->notNull(),
                 'description' => $this->text(),
                 'content' => $this->text(),
-                'metaKeys' => $this->string(),
+                'metaKeys' => $this->string(128),
                 'metaDescription' => $this->string(),
-                'default' => $this->tinyInteger(1)->defaultValue(0),
+                'default' => $this->tinyInteger()->defaultValue(0),
                 'created_at' => $this->dateTime(),
                 'updated_at' => $this->dateTime(),
             ]

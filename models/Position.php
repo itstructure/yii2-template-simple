@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "positions".
  *
@@ -33,7 +35,7 @@ class Position extends ActiveRecord
             [
                 'name',
                 'string',
-                'max' => 255
+                'max' => 64
             ],
             [
                 'name',
@@ -59,9 +61,9 @@ class Position extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'name' => Yii::t('positions', 'Name'),
+            'created_at' => Yii::t('app', 'Created date'),
+            'updated_at' => Yii::t('app', 'Updated date'),
         ];
     }
 

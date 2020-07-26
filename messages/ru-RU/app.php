@@ -40,7 +40,7 @@ return [
 
     'Sitemap' => 'Карта сайта',
 
-    'Yii2 multilanguage project template' => 'Yii2 шаблон мультиязычного приложения',
+    'Yii2 simple project template' => 'Yii2 шаблон простого приложения',
     'You do not have any permissions to perform this action.' => 'У Вас не достаточно прав для выполнения данной операции.',
     'URL Alias' => 'Урл Алиас',
 ];

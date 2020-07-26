@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 use Itstructure\MultiLevelMenu\MenuWidget;
 use Itstructure\MFUploader\behaviors\{BehaviorMediafile, BehaviorAlbum};
@@ -14,6 +15,7 @@ use app\traits\ThumbnailTrait;
  * This is the model class for table "pages".
  *
  * @property int|string $thumbnail thumbnail(mediafile id or url).
+ * @property array $image image(array of 'mediafile id' or 'mediafile url').
  * @property array $albums Existing album ids.
  * @property int $id
  * @property string $title
@@ -41,6 +43,11 @@ class Page extends ActiveRecord
     public $thumbnail;
 
     /**
+     * @var array image(array of 'mediafile id' or 'mediafile url').
+     */
+    public $image;
+
+    /**
      * @var array
      */
     public $albums = [];
@@ -51,14 +58,13 @@ class Page extends ActiveRecord
     public $newParentId;
 
     /**
-     * Initialize.
-     * Set albums, that page has.
+     * Init albums.
      */
-    public function init()
+    public function afterFind()
     {
         $this->albums = $this->getAlbums();
 
-        parent::init();
+        parent::afterFind();
     }
 
     /**
@@ -80,7 +86,8 @@ class Page extends ActiveRecord
                     'title',
                     'content',
                     'active',
-                    'alias',
+                    'metaKeys',
+                    'metaDescription',
                 ],
                 'required',
             ],
@@ -93,10 +100,17 @@ class Page extends ActiveRecord
             ],
             [
                 [
+                    'icon',
                     'title',
                     'metaKeys',
-                    'metaDescription',
                     'alias',
+                ],
+                'string',
+                'max' => 128,
+            ],
+            [
+                [
+                    'metaDescription',
                 ],
                 'string',
                 'max' => 255,
@@ -108,11 +122,6 @@ class Page extends ActiveRecord
                     'active'
                 ],
                 'integer',
-            ],
-            [
-                'icon',
-                'string',
-                'max' => 64,
             ],
             [
                 'alias',
@@ -133,6 +142,15 @@ class Page extends ActiveRecord
                 function($attribute){
                     if (!is_numeric($this->{$attribute}) && !is_string($this->{$attribute})){
                         $this->addError($attribute, 'Tumbnail content must be a numeric or string.');
+                    }
+                },
+                'skipOnError' => false,
+            ],
+            [
+                UploadModelInterface::FILE_TYPE_IMAGE,
+                function($attribute) {
+                    if (!is_array($this->{$attribute})) {
+                        $this->addError($attribute, 'Image field content must be an array.');
                     }
                 },
                 'skipOnError' => false,
@@ -170,6 +188,7 @@ class Page extends ActiveRecord
                 'name' => static::tableName(),
                 'attributes' => [
                     UploadModelInterface::FILE_TYPE_THUMB,
+                    UploadModelInterface::FILE_TYPE_IMAGE,
                 ],
             ],
             'albums' => [
@@ -189,6 +208,7 @@ class Page extends ActiveRecord
     {
         return [
             UploadModelInterface::FILE_TYPE_THUMB,
+            UploadModelInterface::FILE_TYPE_IMAGE,
             'albums',
             'id',
             'parentId',
@@ -213,17 +233,17 @@ class Page extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'parentId' => 'Parent Id',
-            'icon' => 'Icon',
-            'active' => 'Active',
-            'alias' => 'URL Alias',
-            'title' => 'Title',
-            'description' => 'Description',
-            'content' => 'Content',
-            'metaKeys' => 'Meta keys',
-            'metaDescription' => 'Meta description',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'parentId' => Yii::t('app', 'Parent object'),
+            'icon' => Yii::t('app', 'Icon'),
+            'active' => Yii::t('app', 'Active status'),
+            'alias' => Yii::t('app', 'URL Alias'),
+            'title' => Yii::t('app', 'Title'),
+            'description' => Yii::t('app', 'Description'),
+            'content' => Yii::t('app', 'Content'),
+            'metaKeys' => Yii::t('app', 'Meta keys'),
+            'metaDescription' => Yii::t('app', 'Meta description'),
+            'created_at' => Yii::t('app', 'Created date'),
+            'updated_at' => Yii::t('app', 'Updated date'),
         ];
     }
 
@@ -234,13 +254,11 @@ class Page extends ActiveRecord
      */
     public function beforeSave($insert)
     {
-        $this->parentId = empty($this->newParentId) ? null : (int)$this->newParentId;
-
         if (empty($this->newParentId)) {
             $this->parentId = null;
 
         } elseif (MenuWidget::checkNewParentId($this, $this->newParentId)) {
-            $this->parentId = $this->newParentId;
+            $this->parentId = (int)$this->newParentId;
         }
 
         return parent::beforeSave($insert);

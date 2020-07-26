@@ -40,7 +40,7 @@ return [
 
     'Sitemap' => 'Sitemap',
 
-    'Yii2 multilanguage project template' => 'Yii2 multilanguage project template',
+    'Yii2 simple project template' => 'Yii2 simple project template',
     'You do not have any permissions to perform this action.' => 'You do not have any permissions to perform this action.',
     'URL Alias' => 'URL Alias',
 ];

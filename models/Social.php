@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "social".
  *
@@ -45,7 +47,7 @@ class Social extends ActiveRecord
                     'icon'
                 ],
                 'string',
-                'max' => 64
+                'max' => 128
             ],
             [
                 [
@@ -94,11 +96,11 @@ class Social extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'icon' => 'Icon',
-            'url' => 'Url',
-            'contacts' => 'Contacts',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'icon' => Yii::t('app', 'Icon html class'),
+            'url' => Yii::t('social', 'Url'),
+            'contacts' => Yii::t('contacts', 'Contacts'),
+            'created_at' => Yii::t('app', 'Created date'),
+            'updated_at' => Yii::t('app', 'Updated date'),
         ];
     }
 
