@@ -94,6 +94,14 @@ $config = [
         'i18n' => [
             'translations' => $translations
         ],
+        /*'assetManager' => [
+            'linkAssets' => YII_DEBUG
+        ],*/
+        /*'basket' => [
+            'class' => app\components\BasketComponent::class,
+            'modelClass' => app\models\Product::class,
+            'modelAdditionKeys' => ['alias', 'title', 'description']
+        ],*/
     ],
     'defaultRoute' => '/home/index',
     'params' => $params,

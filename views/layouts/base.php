@@ -25,13 +25,15 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php echo Html::csrfMetaTags(); ?>
 
-    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!--<link rel="shortcut icon" href="/images/favicon.ico">-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
     <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
+
+<?php echo $this->render('preloader') ?>
 
 <div class="wrap">
     <?php

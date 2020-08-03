@@ -280,7 +280,7 @@ class Product extends ActiveRecord
     public function getAlbums()
     {
         return OwnerAlbum::getAlbumsQuery([
-            'owner' => $this->tableName(),
+            'owner' => static::tableName(),
             'ownerId' => $this->id,
             'ownerAttribute' => 'albums',
         ])->all();

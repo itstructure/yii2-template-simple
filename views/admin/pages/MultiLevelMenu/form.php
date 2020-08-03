@@ -8,10 +8,10 @@ use app\models\Page;
 ?>
 <?php echo Html::activeRadio($model, 'parentId', [
     'value' => $data->id,
-    'name' => Html::getInputName($model, 'newParentId'),
+    'name' => Html::getInputName($model, 'parentId'),
     'label' => Html::encode($data->title),
     'disabled' => !MenuWidget::checkNewParentId($model, $data->id),
-    'uncheck' => false,
+    //'uncheck' => false,
     'onMouseDown' => 'this.isChecked=this.checked;',
     'onClick' => 'this.checked=!this.isChecked;',
 ]);  ?>

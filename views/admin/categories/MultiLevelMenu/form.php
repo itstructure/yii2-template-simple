@@ -8,7 +8,7 @@ use app\models\Category;
 ?>
 <?php echo Html::activeRadio($model, 'parentId', [
     'value' => $data->id,
-    'name' => Html::getInputName($model, 'newParentId'),
+    'name' => Html::getInputName($model, 'parentId'),
     'label' => Html::encode($data->title),
     'disabled' => !MenuWidget::checkNewParentId($model, $data->id),
     'uncheck' => false,

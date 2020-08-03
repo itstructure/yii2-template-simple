@@ -17,7 +17,6 @@ use Itstructure\MultiLevelMenu\MenuWidget;
  * @property string $created_at
  * @property string $updated_at
  * @property int $parentId
- * @property int $newParentId
  * @property string $alias
  * @property int $active
  *
@@ -25,11 +24,6 @@ use Itstructure\MultiLevelMenu\MenuWidget;
  */
 class Category extends ActiveRecord
 {
-    /**
-     * @var int
-     */
-    public $newParentId;
-
     /**
      * @inheritdoc
      */
@@ -80,10 +74,20 @@ class Category extends ActiveRecord
             [
                 [
                     'parentId',
-                    'newParentId',
                     'active'
                 ],
                 'integer',
+            ],
+            [
+                'parentId',
+                'filter',
+                'filter' => function ($value) {
+                    if (empty($value)) {
+                        return null;
+                    } else {
+                        return MenuWidget::checkNewParentId($this, $value) ? $value : $this->getOldAttribute('parentId');
+                    }
+                }
             ],
             [
                 'alias',
@@ -126,7 +130,6 @@ class Category extends ActiveRecord
             'parentId',
             'alias',
             'active',
-            'newParentId',
             'title',
             'description',
             'content',
@@ -155,23 +158,6 @@ class Category extends ActiveRecord
             'created_at' => Yii::t('app', 'Created date'),
             'updated_at' => Yii::t('app', 'Updated date'),
         ];
-    }
-
-    /**
-     * @param bool $insert
-     *
-     * @return bool
-     */
-    public function beforeSave($insert)
-    {
-        if (empty($this->newParentId)) {
-            $this->parentId = null;
-
-        } elseif (MenuWidget::checkNewParentId($this, $this->newParentId)) {
-            $this->parentId = (int)$this->newParentId;
-        }
-
-        return parent::beforeSave($insert);
     }
 
     /**
