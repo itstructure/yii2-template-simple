@@ -112,7 +112,25 @@ return [
                 ],*/
                 'view' => require __DIR__ . '/view-component.php',
             ],
-            'publicBaseUrl' => $webConfig['homeUrl']
+            'publicBaseUrl' => $webConfig['homeUrl'],
+            'thumbsConfig' => [
+                MFUModule::THUMB_ALIAS_DEFAULT => [
+                    'name' => 'Default size',
+                    'size' => [200, null],
+                ],
+                MFUModule::THUMB_ALIAS_SMALL => [
+                    'name' => 'Small size',
+                    'size' => [100, null],
+                ],
+                MFUModule::THUMB_ALIAS_MEDIUM => [
+                    'name' => 'Medium size',
+                    'size' => [400, null],
+                ],
+                MFUModule::THUMB_ALIAS_LARGE => [
+                    'name' => 'Large size',
+                    'size' => [970, null],
+                ],
+            ]
         ]
     ],
     'components' => [

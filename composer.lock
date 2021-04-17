@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b00d7fb0f849ae3e42e28e41e7d680e",
+    "content-hash": "a869d6cfe518795d58065f54a20ac67c",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -135,7 +135,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -156,7 +156,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -926,16 +926,16 @@
         },
         {
             "name": "itstructure/yii2-multi-format-uploader",
-            "version": "3.0.2",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itstructure/yii2-multi-format-uploader.git",
-                "reference": "73cca6a304cd3508a8f5ef729bd2af5c8a2f2b23"
+                "reference": "08d57c7e00875064ff84ed81f6162ed1fc364cef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itstructure/yii2-multi-format-uploader/zipball/73cca6a304cd3508a8f5ef729bd2af5c8a2f2b23",
-                "reference": "73cca6a304cd3508a8f5ef729bd2af5c8a2f2b23",
+                "url": "https://api.github.com/repos/itstructure/yii2-multi-format-uploader/zipball/08d57c7e00875064ff84ed81f6162ed1fc364cef",
+                "reference": "08d57c7e00875064ff84ed81f6162ed1fc364cef",
                 "shasum": ""
             },
             "require": {
@@ -972,7 +972,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2020-07-22T16:50:40+00:00"
+            "time": "2020-09-12T08:21:53+00:00"
         },
         {
             "name": "itstructure/yii2-multi-level-menu",

@@ -2,10 +2,13 @@
 
 namespace app\controllers\admin;
 
+use Yii;
 use app\models\{Category, Product, ProductSearch};
 use app\traits\{AdminBeforeActionTrait, AccessTrait, AdditionFieldsTrait};
 use Itstructure\MFUploader\interfaces\UploadModelInterface;
 use Itstructure\AdminModule\controllers\CommonAdminController;
+use Itstructure\MFUploader\traits\MediaFilesTrait;
+use Itstructure\MFUploader\Module as MFUploader;
 
 /**
  * Class ProductController
@@ -15,7 +18,7 @@ use Itstructure\AdminModule\controllers\CommonAdminController;
  */
 class ProductController extends CommonAdminController
 {
-    use AdminBeforeActionTrait, AccessTrait, AdditionFieldsTrait;
+    use AdminBeforeActionTrait, AccessTrait, AdditionFieldsTrait, MediaFilesTrait;
 
     /**
      * @var bool
@@ -92,6 +95,12 @@ class ProductController extends CommonAdminController
     {
         if (!$this->checkAccessToDelete()) {
             return $this->accessError();
+        }
+
+        try {
+            $this->deleteMediafiles(Product::tableName(), $id, Yii::$app->getModule(MFUploader::MODULE_NAME));
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
         }
 
         return parent::actionDelete($id);

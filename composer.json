@@ -22,7 +22,7 @@
         "itstructure/yii2-admin-module": "~1.8.2",
         "itstructure/yii2-multi-level-menu": "~3.2.6",
         "google/recaptcha": "^1.2",
-        "itstructure/yii2-multi-format-uploader": "~3.0.2",
+        "itstructure/yii2-multi-format-uploader": "~3.2.0",
         "itstructure/yii2-sitemap-generator": "~1.0.0",
         "itstructure/yii2-rbac-module": "~3.0.2"
     },
