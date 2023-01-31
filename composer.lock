@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7246f2a63ee2c4fe24a78f57bfc70a4d",
+    "content-hash": "d95c433dd6d4eafb3409f1d6fba3f39d",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -716,16 +716,16 @@
         },
         {
             "name": "itstructure/yii2-admin-module",
-            "version": "1.8.5",
+            "version": "1.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itstructure/yii2-admin-module.git",
-                "reference": "17520463e554c30f75e39357552a979021442a29"
+                "reference": "774d1c430cde4ec7a283a76f238dad78fb09d781"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itstructure/yii2-admin-module/zipball/17520463e554c30f75e39357552a979021442a29",
-                "reference": "17520463e554c30f75e39357552a979021442a29",
+                "url": "https://api.github.com/repos/itstructure/yii2-admin-module/zipball/774d1c430cde4ec7a283a76f238dad78fb09d781",
+                "reference": "774d1c430cde4ec7a283a76f238dad78fb09d781",
                 "shasum": ""
             },
             "require": {
@@ -761,9 +761,9 @@
             ],
             "support": {
                 "issues": "https://github.com/itstructure/yii2-admin-module/issues",
-                "source": "https://github.com/itstructure/yii2-admin-module/tree/1.8.5"
+                "source": "https://github.com/itstructure/yii2-admin-module/tree/1.8.7"
             },
-            "time": "2021-04-18T09:55:04+00:00"
+            "time": "2023-01-22T08:43:18+00:00"
         },
         {
             "name": "itstructure/yii2-ckeditor",
@@ -864,16 +864,16 @@
         },
         {
             "name": "itstructure/yii2-multi-format-uploader",
-            "version": "3.2.4",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itstructure/yii2-multi-format-uploader.git",
-                "reference": "e79e3d28f7d234790fa98944c9a770c82124af56"
+                "reference": "c92d2cddff89ec49fa99a2e76d3901894c15e64f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itstructure/yii2-multi-format-uploader/zipball/e79e3d28f7d234790fa98944c9a770c82124af56",
-                "reference": "e79e3d28f7d234790fa98944c9a770c82124af56",
+                "url": "https://api.github.com/repos/itstructure/yii2-multi-format-uploader/zipball/c92d2cddff89ec49fa99a2e76d3901894c15e64f",
+                "reference": "c92d2cddff89ec49fa99a2e76d3901894c15e64f",
                 "shasum": ""
             },
             "require": {
@@ -912,22 +912,22 @@
             ],
             "support": {
                 "issues": "https://github.com/itstructure/yii2-multi-format-uploader/issues",
-                "source": "https://github.com/itstructure/yii2-multi-format-uploader/tree/3.2.4"
+                "source": "https://github.com/itstructure/yii2-multi-format-uploader/tree/3.2.7"
             },
-            "time": "2021-04-18T09:01:30+00:00"
+            "time": "2023-01-23T00:04:48+00:00"
         },
         {
             "name": "itstructure/yii2-multi-level-menu",
-            "version": "3.2.8",
+            "version": "3.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itstructure/yii2-multi-level-menu.git",
-                "reference": "10d3f3e87634e5daa8621227d6acf93e749866fb"
+                "reference": "c07ee2680c02f4d0f3c617d583d38b0244fcdc2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itstructure/yii2-multi-level-menu/zipball/10d3f3e87634e5daa8621227d6acf93e749866fb",
-                "reference": "10d3f3e87634e5daa8621227d6acf93e749866fb",
+                "url": "https://api.github.com/repos/itstructure/yii2-multi-level-menu/zipball/c07ee2680c02f4d0f3c617d583d38b0244fcdc2c",
+                "reference": "c07ee2680c02f4d0f3c617d583d38b0244fcdc2c",
                 "shasum": ""
             },
             "require": {
@@ -959,22 +959,22 @@
             ],
             "support": {
                 "issues": "https://github.com/itstructure/yii2-multi-level-menu/issues",
-                "source": "https://github.com/itstructure/yii2-multi-level-menu/tree/3.2.8"
+                "source": "https://github.com/itstructure/yii2-multi-level-menu/tree/3.2.9"
             },
-            "time": "2021-02-23T06:41:56+00:00"
+            "time": "2023-01-30T13:47:19+00:00"
         },
         {
             "name": "itstructure/yii2-rbac-module",
-            "version": "3.0.4",
+            "version": "3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itstructure/yii2-rbac-module.git",
-                "reference": "6399b1691b9aecf1241c900b80e34ed685ca51f9"
+                "reference": "1fe07e90de2969c86460d7b90b4c2a1b9a630e7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itstructure/yii2-rbac-module/zipball/6399b1691b9aecf1241c900b80e34ed685ca51f9",
-                "reference": "6399b1691b9aecf1241c900b80e34ed685ca51f9",
+                "url": "https://api.github.com/repos/itstructure/yii2-rbac-module/zipball/1fe07e90de2969c86460d7b90b4c2a1b9a630e7e",
+                "reference": "1fe07e90de2969c86460d7b90b4c2a1b9a630e7e",
                 "shasum": ""
             },
             "require": {
@@ -1007,9 +1007,9 @@
             ],
             "support": {
                 "issues": "https://github.com/itstructure/yii2-rbac-module/issues",
-                "source": "https://github.com/itstructure/yii2-rbac-module/tree/3.0.4"
+                "source": "https://github.com/itstructure/yii2-rbac-module/tree/3.0.5"
             },
-            "time": "2021-04-17T16:00:11+00:00"
+            "time": "2023-01-30T13:45:00+00:00"
         },
         {
             "name": "itstructure/yii2-sitemap-generator",
